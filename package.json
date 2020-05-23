@@ -1,0 +1,80 @@
+{
+  "name": "restaurants-menu-api",
+  "version": "0.0.1",
+  "author": "AIS",
+  "private": true,
+  "main": "build/index.js",
+  "scripts": {
+    "prestart": "npm run build",
+    "start": "node -r dotenv/config build/index.js",
+    "clean": "rimraf build",
+    "build": "npm run clean && mkdir build && babel src -s -D -d build",
+    "lint": "eslint --ignore-path .gitignore src"
+  },
+  "dependencies": {
+    "babel": "^6.23.0",
+    "body-parser": "^1.19.0",
+    "debug": "^4.1.1",
+    "dotenv": "^8.2.0",
+    "express": "~4.17.1",
+    "glob": "^7.1.6",
+    "morgan": "~1.10.0",
+    "mysql": "2.18.1",
+    "rimraf": "^3.0.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.1.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "eslint": "^7.1.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-prettier": "^3.1.3",
+    "prettier": "^2.0.5"
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ],
+      [
+        "es2015"
+      ],
+      [
+        "stage-0"
+      ]
+    ]
+  },
+  "eslintConfig": {
+    "plugins": [
+      "import"
+    ],
+    "parserOptions": {
+      "sourceType": "module",
+      "ecmaVersion": 2017,
+      "ecmaFeatures": {
+        "experimentalObjectRestSpread": true
+      }
+    },
+    "env": {
+      "node": true,
+      "es6": true
+    },
+    "extends": [
+      "eslint:recommended"
+    ],
+    "rules": {
+      "no-console": 1
+    }
+  }
+}
