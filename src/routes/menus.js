@@ -1,10 +1,16 @@
 import express from 'express';
+import { getConnection } from 'typeorm';
 
 const router = express.Router();
 
-/* GET users listing. */
-router.get('/', function (req, res) {
-  res.send('respond with a resource');
+/* GET all menus */
+router.get('/', async function (req, res) {
+  const connection = await getConnection();
+
+  const menuRepository = connection.getRepository('Menu');
+  const allMenus = await menuRepository.find();
+
+  res.send(allMenus);
 });
 
 export default router;
