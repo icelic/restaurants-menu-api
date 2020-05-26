@@ -8,8 +8,10 @@ module.exports = {
   synchronize: false,
   entities: ["src/models/**/*.{ts,js}"],
   migrations: ["src/migrations/**/*.{ts,js}"],
+  subscribers: ["src/subscriber/**/*.{ts,js}"],
   cli: {
     entitiesDir: "src/models",
     migrationsDir: "src/migrations",
+    subscribersDir: "src/subscriber",
   },
 };

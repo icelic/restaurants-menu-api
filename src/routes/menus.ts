@@ -1,9 +1,8 @@
 import express, { Router } from 'express';
-import menuController from '../controllers/menuController';
+import MenuController from '../controllers/MenuController';
 
 const menuRouter: Router = express.Router();
 
-/* GET all menus */
-menuRouter.get('/', menuController.all());
+menuRouter.get('/', MenuController.all);
 
 export default menuRouter;

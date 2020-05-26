@@ -1,34 +1,31 @@
-import { ConnectionOptions, createConnection } from 'typeorm';
+import 'reflect-metadata';
+import { createConnection } from 'typeorm';
 import 'babel-core/register';
 import 'babel-polyfill';
 import config from './config';
+import express from 'express';
+import bodyParser from 'body-parser';
+import logger from 'morgan';
+import { router } from './routes';
 
-const connectionOptions: ConnectionOptions = {
-  type: 'mysql',
-  host: process.env.DB_HOST || 'localhost',
-  // @ts-ignore
-  port: process.env.DB_PORT || 3306,
-  username: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  synchronize: false,
-  entities: [__dirname + '/../**/*.{ts,js}'],
-  migrations: ['src/migrations/**/*.{ts,js}'],
-  cli: {
-    entitiesDir: 'src/models',
-    migrationsDir: 'src/migrations',
-  },
-};
-
-createConnection(connectionOptions)
+createConnection()
   .then(() => {
-    const app = require('./app');
+    console.log('Database connection created!');
+
+    const app = express();
+
+    app.use(logger('dev'));
+    app.enable('trust proxy');
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: false }));
+
+    app.use('/', router);
 
     app.listen(config.port, () =>
       console.log(`Listening on port ${config.port}`),
     );
   })
-  .catch(function (error) {
+  .catch((error) =>
     // eslint-disable-next-line no-console
-    console.log('Error: ', error);
-  });
+    console.log('Error: ', error),
+  );
