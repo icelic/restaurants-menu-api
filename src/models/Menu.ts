@@ -1,6 +1,7 @@
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { BaseModel } from './BaseModel';
 import { Restaurant } from './Restaurant';
+import { Attachment } from './Attachment';
 
 @Entity()
 export class Menu extends BaseModel {
@@ -9,4 +10,7 @@ export class Menu extends BaseModel {
 
   @ManyToOne((type) => Restaurant, (restaurant) => restaurant.menus)
   restaurant: Restaurant;
+
+  @OneToMany((type) => Attachment, (attachment) => attachment.menu)
+  attachments: Attachment[];
 }
