@@ -7,6 +7,6 @@ export class Attachment extends BaseModel {
   @Column()
   url: string;
 
-  @ManyToOne((type) => Menu, (menu) => menu.attachments)
+  @ManyToOne(() => Menu, (menu) => menu.attachments)
   menu: Menu;
 }

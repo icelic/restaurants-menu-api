@@ -8,10 +8,10 @@ export class Restaurant extends BaseModel {
   @Column()
   label: string;
 
-  @OneToMany((type) => Menu, (menu) => menu.restaurant)
+  @OneToMany(() => Menu, (menu) => menu.restaurant)
   menus: Menu[];
 
-  @ManyToMany((type) => FoodType)
+  @ManyToMany(() => FoodType)
   @JoinTable({ name: 'restaurant_has_food_type' })
   foodTypes: FoodType[];
 }

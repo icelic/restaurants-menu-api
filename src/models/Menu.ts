@@ -8,9 +8,9 @@ export class Menu extends BaseModel {
   @Column()
   label: string;
 
-  @ManyToOne((type) => Restaurant, (restaurant) => restaurant.menus)
+  @ManyToOne(() => Restaurant, (restaurant) => restaurant.menus)
   restaurant: Restaurant;
 
-  @OneToMany((type) => Attachment, (attachment) => attachment.menu)
+  @OneToMany(() => Attachment, (attachment) => attachment.menu)
   attachments: Attachment[];
 }
