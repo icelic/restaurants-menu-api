@@ -6,7 +6,9 @@ import { Menu } from '../models/Menu';
 class MenuController {
   async all(request: Request, response: Response) {
     const menuRepository = getRepository(Menu);
-    const menus = await menuRepository.find();
+    const menus = await menuRepository.find({
+      relations: ['restaurant'],
+    });
 
     response.send(menus);
   }
