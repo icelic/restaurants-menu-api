@@ -4,6 +4,6 @@ services:
   restaurants-menu-app:
     build:
       context: ..
-      dockerfile: Dockerfile.dev
+      dockerfile: ./conf/Dockerfile.dev
     ports:
       - 8080:8080
