@@ -3,7 +3,7 @@ FROM node:10.13.0-alpine
 # Create app directory
 WORKDIR /app/server/
 
-COPY /Server/ /app/server/
+COPY /Server /app/server/
 
 RUN npm install
 # If you are building your code for production (ignores files in dev dependencies)

@@ -1,9 +1,0 @@
-version: "2"
-
-services:
-  restaurants-menu-app:
-    build:
-      context: ..
-      dockerfile: ./conf/Dockerfile.prod
-    ports:
-      - 8080:8080

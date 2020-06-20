@@ -1,0 +1,32 @@
+version: "2"
+
+services:
+  restaurants-menu-proxy:
+    build:
+      context: ../..
+      dockerfile: conf/proxy/Dockerfile.proxy
+    environment:
+      - API_HOST=${HOSTNAME}
+      - API_PORT=${API_PORT}
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ../dev-certs:/etc/nginx/certs
+    networks:
+     -  restaurants-network
+  restaurants-menu-app:
+    build:
+      context: ../..
+      dockerfile: conf/Server/Dockerfile.prod
+    ports:
+      - ${API_PORT}:8080
+    volumes:
+      - ../dev-certs:/app/server/certs
+    networks:
+      restaurants-network:
+        aliases:
+          - ${HOSTNAME}
+
+networks:
+  restaurants-network:
