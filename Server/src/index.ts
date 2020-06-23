@@ -6,10 +6,10 @@ import config from './config';
 import express from 'express';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
-import { router } from './routes';
 import http from 'http';
 import https from 'https';
 import fs from 'fs';
+import { router } from './routes';
 
 createConnection()
   .then(() => {
