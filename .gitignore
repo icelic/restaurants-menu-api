@@ -30,11 +30,11 @@ bower_components
 .lock-wscript
 
 # Compiled binary addons (https://nodejs.org/api/addons.html)
-build
+Server/build
 
 # Dependency directories
-node_modules/
-jspm_packages/
+Server/node_modules/
+Server/jspm_packages/
 
 # Typescript v1 declaration files
 typings/
@@ -43,8 +43,8 @@ typings/
 .npm
 
 # npm
-node_modules
-package-lock.json
+Server/node_modules
+Server/package-lock.json
 *.gz
 
 # Optional eslint cache
@@ -65,4 +65,6 @@ package-lock.json
 # next.js build output
 .next
 
-.idea
+.idea/*
+.env_prod
+/conf/dev-certs/*
