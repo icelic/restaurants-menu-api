@@ -21,7 +21,6 @@ class MenuController {
       'menus' + '/' + request.params.restaurantId.toString(),
       request.params.menuId.toString(),
     ).then(async (data) => {
-      const entityManager = getManager();
       const newAttachment = new Attachment();
       newAttachment.url = data.Key;
       const menu = await getRepository(Menu).findOne(
