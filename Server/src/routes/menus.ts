@@ -9,7 +9,7 @@ var upload = multer({ storage: storage });
 
 menuRouter.get('/', MenuController.all);
 menuRouter.post(
-  '/:restaurantId/upload',
+  '/:restaurantId/upload/:menuId',
   upload.single('image'),
   MenuController.uploadMenuImage,
 );

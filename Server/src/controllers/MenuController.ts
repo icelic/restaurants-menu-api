@@ -17,7 +17,7 @@ class MenuController {
     uploadToS3(
       (request as any).file,
       'menus' + '/' + request.params.restaurantId.toString(),
-      'menuImage',
+      request.params.menuId.toString(),
     );
     return response
       .status(200)

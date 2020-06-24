@@ -18,8 +18,6 @@ export function uploadToS3(
 
   return new Promise((resolve, reject) => {
     s3.upload(params, function (err, data) {
-      // readStream.destroy();
-
       if (err) {
         return reject(err);
       }
