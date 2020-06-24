@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
+import { getManager } from 'typeorm';
 import { Menu } from '../models/Menu';
 import { uploadToS3 } from '../utils';
+import { Attachment } from '../models/Attachment';
 
 class MenuController {
   async all(request: Request, response: Response) {
@@ -18,10 +20,26 @@ class MenuController {
       (request as any).file,
       'menus' + '/' + request.params.restaurantId.toString(),
       request.params.menuId.toString(),
-    );
-    return response
-      .status(200)
-      .json({ status: 200, message: 'File saved successfully' });
+    ).then(async (data) => {
+      const entityManager = getManager();
+      const newAttachment = new Attachment();
+      newAttachment.url = data.Key;
+      const menu = await getRepository(Menu).findOne(
+        request.params.menuId.toString(),
+      );
+      // check if menu exists and store key to get the image
+      if (menu) {
+        newAttachment.menu = menu;
+        let attachmentRepository = getRepository(Attachment);
+        attachmentRepository.save(newAttachment);
+      }
+    });
+
+    return response.status(200).json({
+      status: 200,
+      message: 'File saved successfully',
+      fileUrlPrefix: process.env.AWS_PUBLIC_URL_PREFIX,
+    });
   }
 
   async one(request: Request, response: Response) {

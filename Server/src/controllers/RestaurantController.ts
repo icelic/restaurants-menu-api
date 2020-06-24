@@ -18,7 +18,12 @@ class RestaurantController {
       (request as any).file,
       'restaurants' + '/' + request.params.restaurantId.toString(),
       'restaurantImage',
-    );
+    ).then((data) => {
+      //   TODO: Save values in the database
+      console.log('## location', data.Location);
+      console.log('## key', data.Key);
+    });
+
     return response
       .status(200)
       .json({ status: 200, message: 'File saved successfully' });
