@@ -18,15 +18,22 @@ class RestaurantController {
       (request as any).file,
       'restaurants' + '/' + request.params.restaurantId.toString(),
       'restaurantImage',
-    ).then((data) => {
-      //   TODO: Save values in the database
-      console.log('## location', data.Location);
-      console.log('## key', data.Key);
+    ).then(async (data) => {
+      const restaurant = await getRepository(Restaurant).findOne(
+        request.params.restaurantId.toString(),
+      );
+      // check if menu exists and store key to get the image
+      if (restaurant) {
+        restaurant.imageKey = data.Key;
+        getRepository(Restaurant).save(restaurant);
+      }
     });
 
-    return response
-      .status(200)
-      .json({ status: 200, message: 'File saved successfully' });
+    return response.status(200).json({
+      status: 200,
+      message: 'File saved successfully',
+      fileUrlPrefix: process.env.AWS_PUBLIC_URL_PREFIX,
+    });
   }
 
   async one(request: Request, response: Response) {
