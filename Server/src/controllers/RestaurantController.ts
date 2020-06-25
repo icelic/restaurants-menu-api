@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import { Restaurant } from '../models/Restaurant';
+import { uploadToS3 } from '../utils';
 
 class RestaurantController {
   async all(request: Request, response: Response) {
@@ -10,6 +11,17 @@ class RestaurantController {
     });
 
     response.send(restaurants);
+  }
+
+  async uploadRestaurantImage(request: Request, response: Response) {
+    uploadToS3(
+      (request as any).file,
+      'restaurants' + '/' + request.params.restaurantId.toString(),
+      'restaurantImage',
+    );
+    return response
+      .status(200)
+      .json({ status: 200, message: 'File saved successfully' });
   }
 
   async one(request: Request, response: Response) {
