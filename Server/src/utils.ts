@@ -14,7 +14,7 @@ export function uploadToS3(
 ): Promise<any> {
   const params = {
     Bucket: process.env.BUCKET_NAME,
-    Key: 'menupls' + '/' + folderName + '/' + fileName,
+    Key: 'menupls' + '/' + folderName + '/' + fileName + '_' + Date.now(),
     Body: fileStream.buffer,
   };
   return new Promise((resolve, reject) => {
@@ -22,9 +22,6 @@ export function uploadToS3(
       if (err) {
         return reject(err);
       }
-      //   TODO: Save values in the database
-      console.log('## location', data.Location);
-      console.log('## key', data.Key);
 
       return resolve(data);
     });

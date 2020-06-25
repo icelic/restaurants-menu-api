@@ -16,12 +16,23 @@ class RestaurantController {
   async uploadRestaurantImage(request: Request, response: Response) {
     uploadToS3(
       (request as any).file,
-      'restaurants' + '/' + request.params.restaurantId.toString(),
+      `restaurants/${request.params.restaurantId.toString()}`,
       'restaurantImage',
-    );
-    return response
-      .status(200)
-      .json({ status: 200, message: 'File saved successfully' });
+    ).then(async (data) => {
+      const restaurant = await getRepository(Restaurant).findOne(
+        request.params.restaurantId.toString(),
+      );
+      // check if menu exists and store key to get the image
+      if (restaurant) {
+        restaurant.imageKey = data.Key;
+        getRepository(Restaurant).save(restaurant);
+      }
+    });
+
+    return response.status(200).send({
+      message: 'File saved successfully',
+      fileUrlPrefix: process.env.AWS_PUBLIC_URL_PREFIX,
+    });
   }
 
   async one(request: Request, response: Response) {
