@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
-import { getManager } from 'typeorm';
 import { Menu } from '../models/Menu';
 import { uploadToS3 } from '../utils';
 import { Attachment } from '../models/Attachment';
@@ -29,7 +28,7 @@ class MenuController {
       // check if menu exists and store key to get the image
       if (menu) {
         newAttachment.menu = menu;
-        let attachmentRepository = getRepository(Attachment);
+        const attachmentRepository = getRepository(Attachment);
         attachmentRepository.save(newAttachment);
       }
     });
