@@ -10,12 +10,20 @@ class MenuController {
 
     if (request.query.restaurantId) {
       const menu = await menuRepository.findOne({
+        relations: ['attachments'],
         where: {
           restaurant: {
             id: request.query.restaurantId,
           },
         },
       });
+
+      if (menu) {
+        menu.attachments.forEach((attachment: Attachment) => {
+          attachment.url = process.env.AWS_PUBLIC_URL_PREFIX + attachment.url;
+        });
+      }
+
       response.send(menu);
     }
 
