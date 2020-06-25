@@ -2,7 +2,7 @@ import React from "react";
 import "./App.scss";
 
 function App() {
-  return <div className="App">MenuPls</div>;
+  return <div className="header-section">MenuPls</div>;
 }
 
 export default App;
