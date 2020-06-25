@@ -7,8 +7,20 @@ import { Attachment } from '../models/Attachment';
 class MenuController {
   async all(request: Request, response: Response) {
     const menuRepository = getRepository(Menu);
+
+    if (request.query.restaurantId) {
+      const menu = await menuRepository.findOne({
+        where: {
+          restaurant: {
+            id: request.query.restaurantId,
+          },
+        },
+      });
+      response.send(menu);
+    }
+
     const menus = await menuRepository.find({
-      relations: ['restaurant'],
+      relations: ['restaurant', 'attachments'],
     });
     response.send(menus);
   }
