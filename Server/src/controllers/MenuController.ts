@@ -10,14 +10,13 @@ class MenuController {
     const menus = await menuRepository.find({
       relations: ['restaurant'],
     });
-
     response.send(menus);
   }
 
   async uploadMenuImage(request: Request, response: Response) {
     uploadToS3(
       (request as any).file,
-      'menus' + '/' + request.params.restaurantId.toString(),
+      `menus/${request.params.restaurantId.toString()}`,
       request.params.menuId.toString(),
     ).then(async (data) => {
       const newAttachment = new Attachment();
