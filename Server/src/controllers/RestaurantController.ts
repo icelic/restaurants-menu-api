@@ -34,7 +34,7 @@ class RestaurantController {
       }
     });
 
-    return response.status(200).send({
+    return response.status(200).json({
       message: 'File saved successfully',
       fileUrlPrefix: process.env.AWS_PUBLIC_URL_PREFIX,
     });
