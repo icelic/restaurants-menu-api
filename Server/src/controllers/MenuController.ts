@@ -33,8 +33,7 @@ class MenuController {
       }
     });
 
-    return response.status(200).json({
-      status: 200,
+    return response.status(200).send({
       message: 'File saved successfully',
       fileUrlPrefix: process.env.AWS_PUBLIC_URL_PREFIX,
     });
