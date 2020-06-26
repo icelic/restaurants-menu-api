@@ -8,4 +8,10 @@ export class User extends BaseModel {
 
   @Column()
   name: string;
+
+  @Column()
+  photoUrl: string;
+
+  @Column()
+  isStaff: boolean;
 }
