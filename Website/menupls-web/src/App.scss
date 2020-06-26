@@ -1,6 +1,19 @@
+$breakpoints: (
+  "mobile": 0px,
+  "tablet": 480px,
+  "desktop": 840px,
+  "lg-desktop": 1240px,
+);
+.container {
+  max-width: 2000px;
+  margin: 0 auto;
+  overflow-x: hidden;
+}
 .header-section {
   background-image: url("images/hero_img.png");
   height: 700px;
-  width: 100%;
+  @media screen and (max-width: map-get($breakpoints, desktop)) {
+    height: 300px;
+  }
   background-size: cover;
 }
