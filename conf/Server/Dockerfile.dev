@@ -1,0 +1,16 @@
+FROM node:10.13.0-alpine
+
+# Create app directory
+WORKDIR /app/server
+
+COPY /Server/package*.json /app/server/
+COPY /Server/tsconfig*.json /app/server/
+
+RUN npm install
+
+COPY /Server .
+
+CMD npm run typeorm migration:run
+CMD npm run start:dev
+
+EXPOSE 8080

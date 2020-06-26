@@ -1,0 +1,7 @@
+FROM nginx:alpine
+
+COPY /conf/proxy/nginx.conf.template /etc/nginx/conf.d/nginx.conf.template
+
+COPY /conf/proxy/proxy-entrypoint.sh /
+ENTRYPOINT ["/proxy-entrypoint.sh"]
+CMD ["nginx", "-g", "daemon off;"]
