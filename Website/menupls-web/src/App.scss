@@ -29,7 +29,6 @@ $breakpoints: (
       }
     }
     .mp-title-row {
-      padding-left: 130px;
       .mp-app-name {
         font-family: Open Sans;
         color: white;
@@ -56,6 +55,7 @@ $breakpoints: (
 
 .mp-guide-section {
   .mp-guide-title {
+    margin: 30px auto 60px;
     text-align: center;
     font-weight: bold;
     font-size: 32px;
@@ -75,6 +75,55 @@ $breakpoints: (
       font-size: 20px;
       line-height: 33px;
       text-align: center;
+    }
+  }
+}
+
+.mp-conclusion-section {
+  display: flex;
+  .mp-left-column {
+    background-image: url("images/transition_rect.png");
+    background-size: cover;
+    flex: 1 0 50%;
+    .mp-column-wrapper {
+      display: flex;
+      flex-direction: column;
+      padding: 40px 70px 40px;
+      .mp-title {
+        font-family: Open Sans;
+        font-size: 56px;
+        line-height: 87px;
+        color: white;
+        max-width: 550px;
+        margin-bottom: 40px;
+      }
+      .mp-image {
+        align-self: center;
+        margin-bottom: 140px;
+      }
+      .mp-hint {
+        font-size: 18px;
+        line-height: 25px;
+        color: white;
+        font-family: Open Sans;
+        text-align: center;
+      }
+    }
+  }
+  .mp-right-column {
+    background-image: url("images/always_ready.png");
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    flex: 1 0 50%;
+    .mp-title {
+      font-family: Open Sans;
+      text-align: center;
+      font-weight: 600;
+      font-size: 72px;
+      line-height: 98px;
+      color: white;
+      align-self: center;
     }
   }
 }

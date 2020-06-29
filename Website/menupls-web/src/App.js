@@ -4,6 +4,7 @@ import appLogo from "./images/app_logo.png";
 import mapImg from "./images/map.png";
 import venueImg from "./images/venue.png";
 import menuImg from "./images/menu.png";
+import appLogoBig from "./images/app_logo_big.png";
 
 function App() {
   return (
@@ -46,6 +47,22 @@ function App() {
               Check the menu for your selection
             </div>
           </div>
+        </div>
+      </div>
+      <div className="mp-conclusion-section">
+        <div className="mp-left-column">
+          <div className="mp-column-wrapper">
+            <div className="mp-title">
+              No more pressure when the waiter comes!
+            </div>
+            <img className="mp-image" src={appLogoBig} alt="App logo" />
+            <div className="mp-hint">
+              Goes hand in hand with the current COVID-19 situation too!
+            </div>
+          </div>
+        </div>
+        <div className="mp-right-column">
+          <div className="mp-title">Your are always ready!</div>
         </div>
       </div>
     </div>
