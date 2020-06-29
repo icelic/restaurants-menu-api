@@ -5,6 +5,42 @@ $breakpoints: (
   "lg-desktop": 1240px,
 );
 
+@mixin font-headline-1() {
+  font-family: Roboto;
+  font-size: 72px;
+  line-height: 72px;
+  @media screen and (max-width: map-get($breakpoints, desktop)) {
+    font-size: 40px;
+    line-height: 40px;
+  }
+}
+
+@mixin font-headline-2() {
+  font-family: "Open Sans";
+  font-size: 32px;
+  line-height: 42px;
+  @media screen and (max-width: map-get($breakpoints, desktop)) {
+    font-size: 20px;
+    line-height: 30px;
+  }
+}
+
+@mixin font-headline-3() {
+  font-family: "Open Sans";
+  font-size: 24px;
+  line-height: 32px;
+  @media screen and (max-width: map-get($breakpoints, desktop)) {
+  }
+}
+
+@mixin font-body-1() {
+  font-family: "Open Sans";
+  font-size: 18px;
+  line-height: 30px;
+  @media screen and (max-width: map-get($breakpoints, desktop)) {
+  }
+}
+
 .mp-container {
   max-width: 2000px;
   margin: 0 auto;
@@ -35,38 +71,26 @@ $breakpoints: (
     }
     .mp-title-row {
       .mp-app-name {
-        font-family: Open Sans;
+        @include font-headline-2();
         color: white;
-        font-size: 36px;
-        line-height: 49px;
         @media screen and (max-width: map-get($breakpoints, desktop)) {
-          font-size: 28px;
-          line-height: 38px;
           text-align: center;
           margin-top: 30px;
         }
       }
       .mp-header-title {
-        font-family: Roboto;
+        @include font-headline-1();
         color: white;
-        font-size: 72px;
-        line-height: 84px;
         max-width: 700px;
         margin: 30px 0 30px;
         @media screen and (max-width: map-get($breakpoints, desktop)) {
-          font-size: 38px;
-          line-height: 48px;
           text-align: center;
         }
       }
       .mp-header-description {
-        font-family: Open Sans;
+        @include font-headline-3();
         color: white;
-        font-size: 24px;
-        line-height: 33px;
         @media screen and (max-width: map-get($breakpoints, desktop)) {
-          font-size: 20px;
-          line-height: 26px;
           text-align: center;
         }
       }
@@ -76,11 +100,10 @@ $breakpoints: (
 
 .mp-guide-section {
   .mp-guide-title {
+    @include font-headline-2();
     margin: 30px auto 60px;
     text-align: center;
     font-weight: bold;
-    font-size: 32px;
-    line-height: 49px;
     margin-bottom: 60px;
   }
   .mp-guide-steps-container {
@@ -95,11 +118,10 @@ $breakpoints: (
     .mp-maps-description,
     .mp-pick-venue-description,
     .mp-menu-description {
-      margin-top: 20px;
+      @include font-headline-3();
       max-width: 250px;
-      font-size: 20px;
-      line-height: 33px;
       text-align: center;
+      margin-top: 20px;
       margin-bottom: 35px;
     }
   }
@@ -122,26 +144,26 @@ $breakpoints: (
       flex-direction: column;
       padding: 40px 70px 40px;
       .mp-title {
-        font-family: Open Sans;
-        font-size: 56px;
-        line-height: 87px;
+        @include font-headline-1();
         color: white;
         max-width: 550px;
         margin-bottom: 40px;
+        @media screen and (max-width: map-get($breakpoints, tablet)) {
+          text-align: center;
+          align-self: center;
+        }
       }
       .mp-image {
         align-self: center;
         margin-bottom: 140px;
         @media screen and (max-width: map-get($breakpoints, desktop)) {
+          width: 200px;
           margin-bottom: 40px;
-          width: 40px;
         }
       }
       .mp-hint {
-        font-size: 18px;
-        line-height: 25px;
+        @include font-body-1();
         color: white;
-        font-family: Open Sans;
         text-align: center;
       }
     }
@@ -156,11 +178,9 @@ $breakpoints: (
       order: 1;
     }
     .mp-title {
-      font-family: Open Sans;
+      @include font-headline-1();
       text-align: center;
       font-weight: 600;
-      font-size: 72px;
-      line-height: 98px;
       color: white;
       align-self: center;
       @media screen and (max-width: map-get($breakpoints, desktop)) {

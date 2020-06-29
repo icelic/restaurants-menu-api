@@ -62,7 +62,7 @@ function App() {
           </div>
         </div>
         <div className="mp-right-column">
-          <div className="mp-title">Your are always ready!</div>
+          <div className="mp-title">You are always ready!</div>
         </div>
       </div>
     </div>
