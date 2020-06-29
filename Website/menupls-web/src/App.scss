@@ -107,10 +107,16 @@ $breakpoints: (
 
 .mp-conclusion-section {
   display: flex;
+  @media screen and (max-width: map-get($breakpoints, desktop)) {
+    flex-direction: column;
+  }
   .mp-left-column {
     background-image: url("images/transition_rect.png");
     background-size: cover;
     flex: 1 0 50%;
+    @media screen and (max-width: map-get($breakpoints, desktop)) {
+      order: 2;
+    }
     .mp-column-wrapper {
       display: flex;
       flex-direction: column;
@@ -126,6 +132,10 @@ $breakpoints: (
       .mp-image {
         align-self: center;
         margin-bottom: 140px;
+        @media screen and (max-width: map-get($breakpoints, desktop)) {
+          margin-bottom: 40px;
+          width: 40px;
+        }
       }
       .mp-hint {
         font-size: 18px;
@@ -142,6 +152,9 @@ $breakpoints: (
     display: flex;
     justify-content: center;
     flex: 1 0 50%;
+    @media screen and (max-width: map-get($breakpoints, desktop)) {
+      order: 1;
+    }
     .mp-title {
       font-family: Open Sans;
       text-align: center;
@@ -150,6 +163,11 @@ $breakpoints: (
       line-height: 98px;
       color: white;
       align-self: center;
+      @media screen and (max-width: map-get($breakpoints, desktop)) {
+        max-width: 400px;
+        text-align: center;
+        padding: 50px 0 50px;
+      }
     }
   }
 }
