@@ -4,6 +4,7 @@ $breakpoints: (
   "desktop": 840px,
   "lg-desktop": 1240px,
 );
+
 .mp-container {
   max-width: 2000px;
   margin: 0 auto;
@@ -16,19 +17,64 @@ $breakpoints: (
   @media screen and (max-width: map-get($breakpoints, desktop)) {
     height: 300px;
   }
-}
-.mp-header-content {
-  height: 300px;
-  display: flex;
-  flex-direction: column;
-  padding: 50px 0 50px 140px;
-  .mp-menu-icon-row {
-    .mp-image {
-      height: 100px;
-      width: 132px;
+  .mp-header-content {
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    padding: 50px 0 50px 140px;
+    .mp-menu-icon-row {
+      .mp-image {
+        height: 100px;
+        width: 132px;
+      }
+    }
+    .mp-title-row {
+      padding-left: 130px;
+      .mp-app-name {
+        font-family: Open Sans;
+        color: white;
+        font-size: 36px;
+        line-height: 49px;
+      }
+      .mp-header-title {
+        font-family: Roboto;
+        color: white;
+        font-size: 72px;
+        line-height: 84px;
+        max-width: 700px;
+        margin: 30px 0 30px;
+      }
+      .mp-header-description {
+        font-family: Open Sans;
+        color: white;
+        font-size: 24px;
+        line-height: 33px;
+      }
     }
   }
-  .mp-title-row {
-    padding-left: 100px;
+}
+
+.mp-guide-section {
+  .mp-guide-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 49px;
+    margin-bottom: 60px;
+  }
+  .mp-guide-steps-container {
+    display: flex;
+    padding: 0 10% 0 10%;
+
+    justify-content: space-between;
+    .mp-maps-description,
+    .mp-pick-venue-description,
+    .mp-menu-description {
+      margin-top: 20px;
+      max-width: 250px;
+      font-size: 20px;
+      line-height: 33px;
+      text-align: center;
+    }
   }
 }
