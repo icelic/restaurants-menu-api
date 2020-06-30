@@ -8,6 +8,7 @@ services:
     environment:
       - API_HOST=${HOSTNAME}
       - API_PORT=${API_PORT}
+      - WEBSITE_PORT=${WEBSITE_PORT}
     ports:
       - 80:80
       - 443:443
@@ -15,6 +16,18 @@ services:
       - ../dev-certs:/etc/nginx/certs
     networks:
      -  restaurants-network
+  restaurants-menu-website:
+    build:
+      context: ../..
+      dockerfile: conf/Website/Dockerfile.prod
+    ports:
+      - ${WEBSITE_PORT}:4000
+    volumes:
+      - ../dev-certs:/app/website/certs
+    networks:
+      restaurants-network:
+        aliases:
+          - ${HOSTNAME}
   restaurants-menu-app:
     build:
       context: ../..
