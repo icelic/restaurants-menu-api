@@ -1,8 +1,8 @@
-import React from "react";
-import mapImg from "../images/map.png";
-import venueImg from "../images/venue.png";
-import menuImg from "../images/menu.png";
-import "./GuideSection.scss";
+import React from 'react';
+import mapImg from '../images/map.png';
+import venueImg from '../images/venue.png';
+import menuImg from '../images/menu.png';
+import './GuideSection.scss';
 
 function GuideSection() {
   return (

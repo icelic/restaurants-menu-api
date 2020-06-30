@@ -1,8 +1,8 @@
-import React from "react";
-import "./App.scss";
-import HeaderSection from "./components/HeaderSection";
-import GuideSection from "./components/GuideSection";
-import ConclusionSection from "./components/ConclusionSection";
+import React from 'react';
+import './App.scss';
+import HeaderSection from './components/HeaderSection';
+import GuideSection from './components/GuideSection';
+import ConclusionSection from './components/ConclusionSection';
 
 function App() {
   return (
