@@ -4,5 +4,5 @@ import restaurantRouter from './restaurants';
 
 export const router: Router = express.Router();
 
-router.use('/menus', menusRouter);
-router.use('/restaurants', restaurantRouter);
+router.use('/api/menus', menusRouter);
+router.use('/api/restaurants', restaurantRouter);
