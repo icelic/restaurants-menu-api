@@ -7,8 +7,28 @@ import { Attachment } from '../models/Attachment';
 class MenuController {
   async all(request: Request, response: Response) {
     const menuRepository = getRepository(Menu);
+
+    if (request.query.restaurantId) {
+      const menu = await menuRepository.findOne({
+        relations: ['attachments'],
+        where: {
+          restaurant: {
+            id: request.query.restaurantId,
+          },
+        },
+      });
+
+      if (menu) {
+        menu.attachments.forEach((attachment: Attachment) => {
+          attachment.url = process.env.AWS_PUBLIC_URL_PREFIX + attachment.url;
+        });
+      }
+
+      response.send(menu);
+    }
+
     const menus = await menuRepository.find({
-      relations: ['restaurant'],
+      relations: ['restaurant', 'attachments'],
     });
     response.send(menus);
   }
@@ -32,7 +52,7 @@ class MenuController {
       }
     });
 
-    return response.status(200).send({
+    return response.status(200).json({
       message: 'File saved successfully',
       fileUrlPrefix: process.env.AWS_PUBLIC_URL_PREFIX,
     });
