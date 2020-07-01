@@ -1,10 +1,11 @@
 import React from 'react';
-import Footer from './Footer';
+import Header from './Header';
 import './Terms.scss';
 
 function Terms() {
   return (
-    <div className="mp-container">
+    <div>
+      <Header></Header>
       <div className="mp-terms">
         <h1>Terms of service</h1>
         <h2>Acceptance of the Terms of Use</h2>
@@ -50,7 +51,6 @@ function Terms() {
           for the quality of food, services and similar.
         </p>
       </div>
-      <Footer></Footer>
     </div>
   );
 }
