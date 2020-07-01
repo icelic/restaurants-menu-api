@@ -5,8 +5,7 @@
   background-color: $footer-color;
   display: flex;
   justify-content: center;
-  position: fixed;
-  bottom: 0;
+  flex-shrink: 0;
   width: 100%;
   a {
     padding: 10px;

@@ -4,15 +4,19 @@ import './index.scss';
 import App from './App';
 import Terms from './components/Terms';
 import Policy from './components/Policy';
+import Footer from './components/Footer';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 
 const routing = (
   <Router>
-    <div>
-      <Route exact path="/" component={App} />
-      <Route path="/policy" component={Policy} />
-      <Route path="/terms" component={Terms} />
+    <div className="mp-container">
+      <div className="mp-content">
+        <Route exact path="/" component={App} />
+        <Route path="/policy" component={Policy} />
+        <Route path="/terms" component={Terms} />
+      </div>
+      <Footer></Footer>
     </div>
   </Router>
 );

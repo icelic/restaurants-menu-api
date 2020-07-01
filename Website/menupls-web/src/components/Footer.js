@@ -4,10 +4,10 @@ import './Footer.scss';
 
 function Footer() {
   return (
-    <div className="mp-footer">
+    <footer className="mp-footer">
       <Link to="/policy">Privacy policy</Link>
       <Link to="/terms">Terms of service</Link>
-    </div>
+    </footer>
   );
 }
 

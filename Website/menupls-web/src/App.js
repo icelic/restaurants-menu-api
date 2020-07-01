@@ -7,11 +7,10 @@ import Footer from './components/Footer';
 
 function App() {
   return (
-    <div className="mp-container">
+    <div>
       <HeaderSection></HeaderSection>
       <GuideSection></GuideSection>
       <ConclusionSection></ConclusionSection>
-      <Footer></Footer>
     </div>
   );
 }
