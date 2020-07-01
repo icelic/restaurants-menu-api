@@ -4,7 +4,9 @@ import Footer from './Footer';
 function Policy() {
   return (
     <div className="mp-policy">
-      <div>Policy is here</div>
+      <div className="mp-container">
+        <div>Policy is here</div>
+      </div>
       <Footer></Footer>
     </div>
   );
