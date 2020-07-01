@@ -4,8 +4,14 @@ server {
     ssl_certificate /etc/nginx/certs/fullchain.pem;
     ssl_certificate_key /etc/nginx/certs/privkey.pem;
 
-    location / {
+    location /api {
         proxy_pass http://${API_HOST}:${API_PORT};
+        proxy_set_header Host $http_host;
+        error_log /var/log/front_end_errors.log;
+    }
+
+    location / {
+        proxy_pass http://${API_HOST}:${WEBSITE_PORT};
         proxy_set_header Host $http_host;
         error_log /var/log/front_end_errors.log;
     }
