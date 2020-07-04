@@ -6,11 +6,12 @@ const restaurantRouter: Router = express.Router();
 var storage = multer.memoryStorage();
 var upload = multer({ storage: storage });
 
-restaurantRouter.get('/', RestaurantController.all);
+restaurantRouter.get('/', RestaurantController.find);
 restaurantRouter.post(
   '/:restaurantId/upload',
   upload.single('image'),
   RestaurantController.uploadRestaurantImage,
 );
+restaurantRouter.post('/', RestaurantController.saveToIndex)
 
 export default restaurantRouter;
