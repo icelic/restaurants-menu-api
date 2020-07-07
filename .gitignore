@@ -67,4 +67,6 @@ Server/package-lock.json
 
 .idea/*
 .env_prod
+.env_dev
+.vscode/*
 /conf/dev-certs/*
