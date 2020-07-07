@@ -35,15 +35,6 @@ services:
       - API_HOST=https://${HOSTNAME}:9200
       - ES_PASSWORD=${ES_PASSWORD}
       - APP_ENV=${APP_ENV}
-      - DB_NAME=${DB_NAME}
-      - DB_USERNAME=${DB_USERNAME}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT}
-      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-      - BUCKET_NAME=${BUCKET_NAME}
-      - AWS_PUBLIC_URL_PREFIX=${AWS_PUBLIC_URL_PREFIX}
     build:
       context: ../..
       dockerfile: conf/Server/Dockerfile.dev
