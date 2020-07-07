@@ -14,4 +14,9 @@ export class User extends BaseModel {
 
   @Column()
   isStaff: boolean;
+
+  @Column()
+  password: string;
+
+  token: string;
 }

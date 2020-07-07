@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import { Menu } from '../models/Menu';
-import { uploadToS3 } from '../utils';
+import { uploadToS3 } from '../utils/upload';
 import { Attachment } from '../models/Attachment';
 
 class MenuController {

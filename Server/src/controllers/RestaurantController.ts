@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import { Restaurant } from '../models/Restaurant';
-import { uploadToS3 } from '../utils';
+import { uploadToS3 } from '../utils/upload';
 
 // TODO decide where to put client node 
 // TODO define host and port in a different file
