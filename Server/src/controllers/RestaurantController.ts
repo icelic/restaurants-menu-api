@@ -5,7 +5,6 @@ import { uploadToS3 } from '../utils';
 import fs from 'fs';
 
 // TODO decide where to put client node
-// TODO define host and port in a different file
 import { Client } from '@elastic/elasticsearch';
 const client = new Client({
   node: process.env.API_HOST,
@@ -18,8 +17,6 @@ const client = new Client({
     rejectUnauthorized: false,
   },
 });
-console.log('Password: ', process.env.ES_PASSWORD);
-console.log('Host: ', process.env.API_HOST);
 
 class RestaurantController {
   async find(request: Request, response: Response) {
