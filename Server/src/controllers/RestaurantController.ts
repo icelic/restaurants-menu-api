@@ -5,21 +5,18 @@ import { uploadToS3 } from '../utils';
 import fs from 'fs';
 
 // TODO decide where to put client node
-// TODO define host and port in a different file
 import { Client } from '@elastic/elasticsearch';
 const client = new Client({
   node: process.env.API_HOST,
   auth: {
     username: 'elastic',
-    password: process.env.ES_PASSWORD,
+    password: process.env.ES_PASSWORD as string,
   },
   ssl: {
     ca: fs.readFileSync('./certs/fullchain.pem'),
     rejectUnauthorized: false,
   },
 });
-console.log('Password: ', process.env.ES_PASSWORD);
-console.log('Host: ', process.env.API_HOST);
 
 class RestaurantController {
   async find(request: Request, response: Response) {
