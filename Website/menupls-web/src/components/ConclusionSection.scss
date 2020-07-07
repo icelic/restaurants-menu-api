@@ -1,0 +1,67 @@
+@import "../typography.scss";
+@import "../variables.scss";
+
+.mp-conclusion-section {
+  display: flex;
+  @media screen and (max-width: map-get($breakpoints, desktop)) {
+    flex-direction: column;
+  }
+  .mp-left-column {
+    background-image: url("../images/transition_rect.png");
+    background-size: cover;
+    flex: 1 0 50%;
+    @media screen and (max-width: map-get($breakpoints, desktop)) {
+      order: 2;
+    }
+    .mp-column-wrapper {
+      display: flex;
+      flex-direction: column;
+      padding: 40px 70px 40px;
+      .mp-title {
+        @include font-headline-1();
+        color: white;
+        max-width: 550px;
+        margin-bottom: 40px;
+        @media screen and (max-width: map-get($breakpoints, tablet)) {
+          text-align: center;
+          align-self: center;
+        }
+      }
+      .mp-image {
+        align-self: center;
+        margin-bottom: 140px;
+        @media screen and (max-width: map-get($breakpoints, desktop)) {
+          width: 200px;
+          margin-bottom: 40px;
+        }
+      }
+      .mp-hint {
+        @include font-body-1();
+        color: white;
+        text-align: center;
+      }
+    }
+  }
+  .mp-right-column {
+    background-image: url("../images/always_ready.png");
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    flex: 1 0 50%;
+    @media screen and (max-width: map-get($breakpoints, desktop)) {
+      order: 1;
+    }
+    .mp-title {
+      @include font-headline-1();
+      text-align: center;
+      font-weight: 600;
+      color: white;
+      align-self: center;
+      @media screen and (max-width: map-get($breakpoints, desktop)) {
+        max-width: 400px;
+        text-align: center;
+        padding: 50px 0 50px;
+      }
+    }
+  }
+}

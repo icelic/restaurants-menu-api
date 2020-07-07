@@ -1,16 +1,61 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
-
 import { Menu } from '../models/Menu';
+import { uploadToS3 } from '../utils';
+import { Attachment } from '../models/Attachment';
 
 class MenuController {
   async all(request: Request, response: Response) {
     const menuRepository = getRepository(Menu);
+
+    if (request.query.restaurantId) {
+      const menu = await menuRepository.findOne({
+        relations: ['attachments'],
+        where: {
+          restaurant: {
+            id: request.query.restaurantId,
+          },
+        },
+      });
+
+      if (menu) {
+        menu.attachments.forEach((attachment: Attachment) => {
+          attachment.url = process.env.AWS_PUBLIC_URL_PREFIX + attachment.url;
+        });
+      }
+
+      response.send(menu);
+    }
+
     const menus = await menuRepository.find({
-      relations: ['restaurant'],
+      relations: ['restaurant', 'attachments'],
+    });
+    response.send(menus);
+  }
+
+  async uploadMenuImage(request: Request, response: Response) {
+    uploadToS3(
+      (request as any).file,
+      `menus/${request.params.restaurantId.toString()}`,
+      request.params.menuId.toString(),
+    ).then(async (data) => {
+      const newAttachment = new Attachment();
+      newAttachment.url = data.Key;
+      const menu = await getRepository(Menu).findOne(
+        request.params.menuId.toString(),
+      );
+      // check if menu exists and store key to get the image
+      if (menu) {
+        newAttachment.menu = menu;
+        const attachmentRepository = getRepository(Attachment);
+        attachmentRepository.save(newAttachment);
+      }
     });
 
-    response.send(menus);
+    return response.status(200).json({
+      message: 'File saved successfully',
+      fileUrlPrefix: process.env.AWS_PUBLIC_URL_PREFIX,
+    });
   }
 
   async one(request: Request, response: Response) {

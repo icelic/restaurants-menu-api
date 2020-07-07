@@ -1,0 +1,17 @@
+@import "../typography.scss";
+@import "../variables.scss";
+
+.mp-footer {
+  background-color: $footer-color;
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 100%;
+  a {
+    padding: 10px;
+    @include font-body-1();
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+}

@@ -1,15 +1,94 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import { Restaurant } from '../models/Restaurant';
+import { uploadToS3 } from '../utils';
+import fs from 'fs';
+
+// TODO decide where to put client node
+import { Client } from '@elastic/elasticsearch';
+const client = new Client({
+  node: process.env.API_HOST,
+  auth: {
+    username: 'elastic',
+    password: process.env.ES_PASSWORD as string,
+  },
+  ssl: {
+    ca: fs.readFileSync('./certs/fullchain.pem'),
+    rejectUnauthorized: false,
+  },
+});
 
 class RestaurantController {
-  async all(request: Request, response: Response) {
+  async find(request: Request, response: Response) {
+    // retrieve data from elastic search if query value is defined
+    if (request.query.value) {
+      return client
+        .search({
+          // TODO define indexes and fields in a different file
+          index: 'restaurants',
+          body: {
+            query: {
+              query_string: {
+                fields: ['label', 'location'],
+                // find everything that contains the given value
+                query: '*' + request.query.value + '*',
+              },
+            },
+          },
+        })
+        .then((data) => response.json(data.body.hits.hits))
+        .catch((error) => console.log(error));
+    }
+
     const restaurantRepository = getRepository(Restaurant);
     const restaurants = await restaurantRepository.find({
-      relations: ['menus', 'menus.attachments', 'foodTypes'],
+      relations: ['menus', 'foodTypes'],
+    });
+    restaurants.forEach((value: Restaurant) => {
+      if (value.imageKey !== '') {
+        value.imageKey = process.env.AWS_PUBLIC_URL_PREFIX + value.imageKey;
+      }
     });
 
     response.send(restaurants);
+  }
+
+  async saveToIndex(request: Request, response: Response) {
+    client
+      .index({
+        // TODO define indexes in a different file
+        index: 'restaurants',
+        body: {
+          label: request.body.label,
+          location: request.body.location,
+          imageKey: request.body.imageKey,
+          menus: request.body.menus,
+          foodType: request.body.foodType,
+        },
+      })
+      .then((data) => response.json(data.body));
+  }
+
+  async uploadRestaurantImage(request: Request, response: Response) {
+    uploadToS3(
+      (request as any).file,
+      `restaurants/${request.params.restaurantId.toString()}`,
+      'restaurantImage',
+    ).then(async (data) => {
+      const restaurant = await getRepository(Restaurant).findOne(
+        request.params.restaurantId.toString(),
+      );
+      // check if menu exists and store key to get the image
+      if (restaurant) {
+        restaurant.imageKey = data.Key;
+        getRepository(Restaurant).save(restaurant);
+      }
+    });
+
+    return response.status(200).json({
+      message: 'File saved successfully',
+      fileUrlPrefix: process.env.AWS_PUBLIC_URL_PREFIX,
+    });
   }
 
   async one(request: Request, response: Response) {
