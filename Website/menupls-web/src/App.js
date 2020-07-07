@@ -3,7 +3,6 @@ import './App.scss';
 import HeaderSection from './components/HeaderSection';
 import GuideSection from './components/GuideSection';
 import ConclusionSection from './components/ConclusionSection';
-import Footer from './components/Footer';
 
 function App() {
   return (
