@@ -62,12 +62,16 @@ services:
       - xpack.security.transport.ssl.key=${ES_CERTS_DIR}/privkey.pem
     volumes:
       - ../dev-certs:${ES_CERTS_DIR}
+      - es_data:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
     networks:
       restaurants-network:
         aliases:
           - ${HOSTNAME}
+
+volumes:
+  es_data:
 
 networks:
   restaurants-network:
