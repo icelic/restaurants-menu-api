@@ -1,0 +1,9 @@
+.form__button-container {
+  display: flex;
+  justify-content: flex-end;
+
+  &__button {
+    width: 100px;
+    height: 40px;
+  }
+}

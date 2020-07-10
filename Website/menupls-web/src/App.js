@@ -1,16 +1,17 @@
 import React from 'react';
-import './App.scss';
+
 import HeaderSection from './components/HeaderSection';
 import GuideSection from './components/GuideSection';
 import ConclusionSection from './components/ConclusionSection';
-import Footer from './components/Footer';
+
+import './App.scss';
 
 function App() {
   return (
     <div>
-      <HeaderSection></HeaderSection>
-      <GuideSection></GuideSection>
-      <ConclusionSection></ConclusionSection>
+      <HeaderSection />
+      <GuideSection />
+      <ConclusionSection />
     </div>
   );
 }

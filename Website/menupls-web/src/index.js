@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.scss';
+
 import App from './App';
 import Terms from './components/Terms';
 import Policy from './components/Policy';
 import Footer from './components/Footer';
+import { AdminRestaurantForm } from './components/pages';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
+
+import './index.scss';
 
 const routing = (
   <Router>
@@ -15,8 +18,9 @@ const routing = (
         <Route exact path="/" component={App} />
         <Route path="/policy" component={Policy} />
         <Route path="/terms" component={Terms} />
+        <Route path="/admin" component={AdminRestaurantForm} />
       </div>
-      <Footer></Footer>
+      <Footer />
     </div>
   </Router>
 );
