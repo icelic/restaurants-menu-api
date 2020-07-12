@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import appLogoWhite from '../../../images/app_logo_white.png';
+import appLogoWhite from 'src/images/app_logo_white.png';
 
 import './index.scss';
 

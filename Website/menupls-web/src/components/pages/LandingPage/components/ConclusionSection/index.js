@@ -1,5 +1,7 @@
 import React from 'react';
-import appLogoBig from '../../../../../images/app_logo_big.png';
+
+import appLogoBig from 'src/images/app_logo_big.png';
+
 import './index.scss';
 
 function ConclusionSection() {
