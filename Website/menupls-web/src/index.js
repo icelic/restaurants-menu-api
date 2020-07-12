@@ -1,5 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Route, BrowserRouter as Router } from 'react-router-dom';
+
+import * as serviceWorker from './serviceWorker';
+import { paths } from './constants';
 
 import {
   AdminRestaurantForm,
@@ -8,20 +12,19 @@ import {
   Policy,
   Terms,
 } from './components/pages';
-import { Route, BrowserRouter as Router } from 'react-router-dom';
-import * as serviceWorker from './serviceWorker';
+import { SecuredRoute } from './components/common';
 
-import './index.scss';
+import './theme/global.scss';
 
 const routing = (
   <Router>
     <div className="mp-container">
       <div className="mp-content">
-        <Route exact path="/" component={LandingPage} />
-        <Route path="/policy" component={Policy} />
-        <Route path="/terms" component={Terms} />
-        <Route path="/admin" component={AdminRestaurantForm} />
-        <Route path="/login" component={Login} />
+        <Route exact path={paths.BASE} component={LandingPage} />
+        <Route path={paths.POLICY} component={Policy} />
+        <Route path={paths.TERMS} component={Terms} />
+        <Route path={paths.LOGIN} component={Login} />
+        <SecuredRoute path={paths.ADMIN} component={AdminRestaurantForm} />
       </div>
     </div>
   </Router>
