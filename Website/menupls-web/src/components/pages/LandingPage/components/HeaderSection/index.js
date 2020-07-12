@@ -1,6 +1,6 @@
 import React from 'react';
-import appLogo from '../images/app_logo.png';
-import './HeaderSection.scss';
+import appLogo from '../../../../../images/app_logo.png';
+import './index.scss';
 
 function HeaderSection() {
   return (

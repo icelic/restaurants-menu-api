@@ -1,11 +1,13 @@
 import React from 'react';
-import Header from './Header';
-import './TermsAndPolicy.scss';
 
-function Terms() {
+import { Header } from '../../common';
+
+import './index.scss';
+
+function Index() {
   return (
     <div>
-      <Header></Header>
+      <Header />
       <div className="mp-terms">
         <h1>Terms of service</h1>
         <h2>Acceptance of the Terms of Use</h2>
@@ -55,4 +57,4 @@ function Terms() {
   );
 }
 
-export default Terms;
+export default Index;

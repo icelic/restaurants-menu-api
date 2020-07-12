@@ -1,8 +1,8 @@
-@import "../typography.scss";
-@import "../variables.scss";
+@import "../../../../../typography";
+@import "../../../../../variables";
 
 .mp-header-section {
-  background-image: url("../images/hero_img.png");
+  background-image: url("../../../../../images/hero_img.png");
   background-size: cover;
   height: 700px;
   @media screen and (max-width: map-get($breakpoints, desktop)) {

@@ -1,11 +1,13 @@
 import React from 'react';
-import Header from './Header';
-import './TermsAndPolicy.scss';
+
+import { Header } from '../../common';
+
+import './index.scss';
 
 function Policy() {
   return (
     <div>
-      <Header></Header>
+      <Header />
       <div className="mp-policy">
         <h1>Privacy Policy</h1>
         <p>

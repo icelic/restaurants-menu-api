@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import App from './App';
-import Terms from './components/Terms';
-import Policy from './components/Policy';
-import Footer from './components/Footer';
-import { AdminRestaurantForm } from './components/pages';
+import {
+  AdminRestaurantForm,
+  Login,
+  LandingPage,
+  Policy,
+  Terms,
+} from './components/pages';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 
@@ -15,12 +17,12 @@ const routing = (
   <Router>
     <div className="mp-container">
       <div className="mp-content">
-        <Route exact path="/" component={App} />
+        <Route exact path="/" component={LandingPage} />
         <Route path="/policy" component={Policy} />
         <Route path="/terms" component={Terms} />
         <Route path="/admin" component={AdminRestaurantForm} />
+        <Route path="/login" component={Login} />
       </div>
-      <Footer />
     </div>
   </Router>
 );
