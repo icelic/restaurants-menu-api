@@ -36,7 +36,7 @@ class RestaurantController {
             },
           },
         })
-        .then((data) => response.json(data.body.hits.hits._source))
+        .then((data) => response.json(data.body.hits.hits.map((restaurant) => restaurant._source)))
         .catch((error) => console.log(error));
     }
 
