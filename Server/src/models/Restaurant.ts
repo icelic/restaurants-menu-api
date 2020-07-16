@@ -12,6 +12,9 @@ export class Restaurant extends BaseModel {
   location: string;
 
   @Column()
+  locationAddress: string;
+
+  @Column()
   imageKey: string;
 
   @OneToMany(() => Menu, (menu) => menu.restaurant)
