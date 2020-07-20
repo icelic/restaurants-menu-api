@@ -13,7 +13,7 @@ const SecuredRoute = ({ component, ...routeProps }) => {
   if (jwt.getToken()) {
     Component = component;
   } else {
-    window.location.href = paths.BASE;
+    window.location.href = paths.LOGIN;
   }
 
   return <Route {...routeProps} render={() => <Component />} />;

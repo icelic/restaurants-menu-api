@@ -1,13 +1,15 @@
+import axios from 'axios';
 import React, { memo, useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
 import { Form, Input } from '../../common';
-import validationSchema from './validationSchema';
+import { paths } from '../../../constants';
+import jwt from '../../../utils/jwt';
 
+import validationSchema from './validationSchema';
 import './index.scss';
 
-const Login = ({ login, isLoading }) => {
+const Login = () => {
   const history = useHistory();
 
   const redirect = useCallback(
@@ -17,7 +19,19 @@ const Login = ({ login, isLoading }) => {
     [history]
   );
 
-  const loginUser = (data) => {};
+  const loginUser = (data) => {
+    axios
+      .post(`${process.env.REACT_APP_API_BASE_URL}/api/admin/login`, data)
+      .then((res) => {
+        jwt.setToken(res.data.token);
+
+        redirect(paths.ADMIN);
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-alert
+        window.alert(error);
+      });
+  };
 
   return (
     <div className="login-form-container">
@@ -32,11 +46,6 @@ const Login = ({ login, isLoading }) => {
       </Form>
     </div>
   );
-};
-
-Login.propTypes = {
-  login: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool.isRequired,
 };
 
 export default memo(Login);

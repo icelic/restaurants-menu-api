@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Switch } from 'react-router';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
 
 import * as serviceWorker from './serviceWorker';
@@ -20,11 +21,17 @@ const routing = (
   <Router>
     <div className="mp-container">
       <div className="mp-content">
-        <Route exact path={paths.BASE} component={LandingPage} />
-        <Route path={paths.POLICY} component={Policy} />
-        <Route path={paths.TERMS} component={Terms} />
-        <Route path={paths.LOGIN} component={Login} />
-        <SecuredRoute path={paths.ADMIN} component={AdminRestaurantForm} />
+        <Switch>
+          <Route exact path={paths.BASE} component={LandingPage} />
+          <Route exact path={paths.POLICY} component={Policy} />
+          <Route exact path={paths.TERMS} component={Terms} />
+          <Route exact path={paths.LOGIN} component={Login} />
+          <SecuredRoute
+            exact
+            path={paths.ADMIN}
+            component={AdminRestaurantForm}
+          />
+        </Switch>
       </div>
     </div>
   </Router>
