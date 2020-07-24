@@ -1,10 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { Header } from '../../common';
 
 import './index.scss';
 
-function Index() {
+function Terms() {
   return (
     <div>
       <Header />
@@ -33,7 +34,8 @@ function Index() {
         <h2>Personal data</h2>
         <p>
           Personal data collected by the service will be used exclusively in
-          accordance with the Privacy Policy (link) of the MenuPls service.
+          accordance with the <Link to="/policy">Privacy policy</Link> of the
+          MenuPls service.
         </p>
         <h2>Amendments</h2>
         <p>
@@ -57,4 +59,4 @@ function Index() {
   );
 }
 
-export default Index;
+export default Terms;
