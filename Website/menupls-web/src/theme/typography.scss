@@ -1,5 +1,5 @@
 @mixin font-headline-1() {
-  font-family: Roboto;
+  font-family: "Merriweather", serif;
   font-size: 72px;
   line-height: 72px;
   @media screen and (max-width: map-get($breakpoints, desktop)) {
@@ -9,7 +9,7 @@
 }
 
 @mixin font-headline-2() {
-  font-family: "Open Sans";
+  font-family: "Merriweather", serif;
   font-size: 32px;
   line-height: 42px;
   @media screen and (max-width: map-get($breakpoints, desktop)) {
@@ -19,7 +19,7 @@
 }
 
 @mixin font-headline-3() {
-  font-family: "Open Sans";
+  font-family: "Merriweather", serif;
   font-size: 24px;
   line-height: 32px;
   @media screen and (max-width: map-get($breakpoints, desktop)) {
@@ -27,7 +27,7 @@
 }
 
 @mixin font-body-1() {
-  font-family: "Open Sans";
+  font-family: "Merriweather", serif;
   font-size: 18px;
   line-height: 30px;
   @media screen and (max-width: map-get($breakpoints, desktop)) {

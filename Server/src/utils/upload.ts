@@ -1,13 +1,18 @@
 import AWS from 'aws-sdk';
+import multer from 'multer';
 import { PutObjectRequest } from 'aws-sdk/clients/s3';
 
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
 const s3 = new AWS.S3();
+
 AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
 });
 
-export function uploadToS3(
+function uploadToS3(
   fileStream: Buffer,
   folderName: string,
   fileName: string,
@@ -27,3 +32,5 @@ export function uploadToS3(
     });
   });
 }
+
+export { uploadToS3, upload };

@@ -13,6 +13,7 @@ const Form = ({
   submitBtnLabel,
   formClassName,
   validationSchema,
+  formRef,
 }) => {
   const { register, handleSubmit, errors } = useForm({
     defaultValues,
@@ -26,7 +27,11 @@ const Form = ({
     });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={formClassName}>
+    <form
+      ref={formRef}
+      onSubmit={handleSubmit(onSubmit)}
+      className={formClassName}
+    >
       {Children.map(children, renderChild)}
       <div className="form__button-container">
         <button
@@ -47,6 +52,7 @@ Form.propTypes = {
   ]).isRequired,
   submitBtnLabel: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  formRef: PropTypes.objectOf(PropTypes.any),
   defaultValues: PropTypes.objectOf(PropTypes.any),
   formClassName: PropTypes.string,
   validationSchema: PropTypes.objectOf(PropTypes.any),
@@ -56,6 +62,7 @@ Form.defaultProps = {
   defaultValues: {},
   formClassName: '',
   validationSchema: {},
+  formRef: null,
 };
 
 export default memo(Form);

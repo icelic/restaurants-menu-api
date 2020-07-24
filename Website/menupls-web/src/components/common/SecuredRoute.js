@@ -20,10 +20,7 @@ const SecuredRoute = ({ component, ...routeProps }) => {
 };
 
 SecuredRoute.propTypes = {
-  authenticateUser: PropTypes.func.isRequired,
-  component: PropTypes.node.isRequired,
-  hasLoaded: PropTypes.bool.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
+  component: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired,
 };
 
 export default memo(SecuredRoute);

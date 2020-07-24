@@ -4,6 +4,10 @@ import { getRepository } from 'typeorm';
 
 import { User } from '../models/User';
 import { generateAccessToken } from '../utils/jwt';
+import { Restaurant } from '../models/Restaurant';
+import { uploadToS3 } from '../utils/upload';
+
+// @TODO this all should probably be separate admin backend
 
 class AdminController {
   async login(req: Request, res: Response) {
@@ -26,6 +30,38 @@ class AdminController {
     delete user.password;
 
     return res.send(user);
+  }
+
+  async createRestaurant(req: Request, res: Response) {
+    const { label, location } = req.body;
+
+    if (!label || !location) {
+      return res.status(400).json('Request missing name or location!').end();
+    }
+
+    const createdRestaurant = await getRepository(Restaurant).save({
+      label,
+      location,
+      imageKey: '',
+    });
+
+    console.log(`req.file`);
+    console.log((req as any).file);
+
+    if ((req as any).file) {
+      uploadToS3(
+        (req as any).file,
+        `restaurants/${createdRestaurant.id}`,
+        'restaurantImage',
+      ).then(async (data) => {
+        await getRepository(Restaurant).save({
+          id: createdRestaurant.id,
+          imageKey: data.Key,
+        });
+      });
+    }
+
+    return res.json(createdRestaurant).end();
   }
 }
 

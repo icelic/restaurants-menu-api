@@ -7,14 +7,11 @@ import './index.scss';
 const Input = ({
   id,
   name,
-  type,
   className,
-  placeholder,
-  disabled,
   error,
   inputRef,
-  defaultValue,
   label,
+  ...otherProps
 }) => {
   const inputClassNames = useMemo(
     () =>
@@ -39,12 +36,9 @@ const Input = ({
         <input
           id={id || name}
           name={name}
-          type={type}
           className={inputClassNames}
-          placeholder={placeholder}
-          disabled={disabled}
-          defaultValue={defaultValue}
           ref={inputRef}
+          {...otherProps}
         />
       </div>
       <div className="error-message">{error}</div>
@@ -59,29 +53,15 @@ Input.propTypes = {
     PropTypes.shape({ current: PropTypes.any }),
   ]).isRequired,
   id: PropTypes.string,
-  type: PropTypes.string,
   className: PropTypes.string,
-  placeholder: PropTypes.string,
-  required: PropTypes.bool,
-  disabled: PropTypes.bool,
   error: PropTypes.string,
-  defaultValue: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.bool,
-  ]),
   label: PropTypes.string,
 };
 
 Input.defaultProps = {
   id: null,
-  type: 'text',
   className: '',
-  placeholder: '',
-  required: false,
-  disabled: false,
   error: '',
-  defaultValue: '',
   label: '',
 };
 
