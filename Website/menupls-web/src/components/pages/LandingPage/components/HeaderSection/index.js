@@ -10,7 +10,6 @@ function HeaderSection() {
           <img className="mp-image" src={appLogo} alt="App icon" />
         </div>
         <div className="mp-title-row">
-          <div className="mp-app-name">MenuPls</div>
           <div className="mp-header-title">
             Life is like a menu, full of choices
           </div>
