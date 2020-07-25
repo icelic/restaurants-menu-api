@@ -1,5 +1,5 @@
-@import "../typography.scss";
-@import "../variables.scss";
+@import "src/theme/typography";
+@import "src/theme/variables";
 
 .mp-conclusion-section {
   display: flex;
@@ -7,7 +7,7 @@
     flex-direction: column;
   }
   .mp-left-column {
-    background-image: url("../images/transition_rect.png");
+    background-image: url("../../../../../images/transition_rect.png");
     background-size: cover;
     flex: 1 0 50%;
     @media screen and (max-width: map-get($breakpoints, desktop)) {
@@ -43,7 +43,7 @@
     }
   }
   .mp-right-column {
-    background-image: url("../images/always_ready.png");
+    background-image: url("../../../../../images/always_ready.png");
     background-size: cover;
     display: flex;
     justify-content: center;

@@ -1,8 +1,10 @@
 import React from 'react';
-import mapImg from '../images/map.png';
-import venueImg from '../images/venue.png';
-import menuImg from '../images/menu.png';
-import './GuideSection.scss';
+
+import mapImg from 'src/images/map.png';
+import venueImg from 'src/images/venue.png';
+import menuImg from 'src/images/menu.png';
+
+import './index.scss';
 
 function GuideSection() {
   return (

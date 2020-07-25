@@ -1,22 +1,38 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.scss';
-import App from './App';
-import Terms from './components/Terms';
-import Policy from './components/Policy';
-import Footer from './components/Footer';
+import { Switch } from 'react-router';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
+
 import * as serviceWorker from './serviceWorker';
+import { paths } from './constants';
+
+import {
+  AdminRestaurantForm,
+  Login,
+  LandingPage,
+  Policy,
+  Terms,
+} from './components/pages';
+import { SecuredRoute } from './components/common';
+
+import './theme/global.scss';
 
 const routing = (
   <Router>
     <div className="mp-container">
       <div className="mp-content">
-        <Route exact path="/" component={App} />
-        <Route path="/policy" component={Policy} />
-        <Route path="/terms" component={Terms} />
+        <Switch>
+          <Route exact path={paths.BASE} component={LandingPage} />
+          <Route exact path={paths.POLICY} component={Policy} />
+          <Route exact path={paths.TERMS} component={Terms} />
+          <Route exact path={paths.LOGIN} component={Login} />
+          <SecuredRoute
+            exact
+            path={paths.ADMIN}
+            component={AdminRestaurantForm}
+          />
+        </Switch>
       </div>
-      <Footer></Footer>
     </div>
   </Router>
 );

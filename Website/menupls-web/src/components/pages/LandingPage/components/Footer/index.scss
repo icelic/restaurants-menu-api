@@ -1,5 +1,5 @@
-@import "../typography.scss";
-@import "../variables.scss";
+@import "src/theme/typography";
+@import "src/theme/variables";
 
 .mp-footer {
   background-color: $footer-color;

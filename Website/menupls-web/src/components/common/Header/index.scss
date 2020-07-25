@@ -1,9 +1,10 @@
-@import "../variables.scss";
+@import "src/theme/variables";
 
 .mp-header {
   background-color: $footer-color;
   display: flex;
   justify-content: left;
+
   .mp-image {
     color: white;
     width: 50px;

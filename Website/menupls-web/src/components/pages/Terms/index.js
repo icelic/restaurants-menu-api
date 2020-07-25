@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Header from './Header';
-import './TermsAndPolicy.scss';
+
+import { Header } from '../../common';
+
+import './index.scss';
 
 function Terms() {
   return (
     <div>
-      <Header></Header>
+      <Header />
       <div className="mp-terms">
         <h1>Terms of service</h1>
         <h2>Acceptance of the Terms of Use</h2>

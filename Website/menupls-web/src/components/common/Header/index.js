@@ -1,7 +1,9 @@
 import React from 'react';
-import './Header.scss';
-import appLogoWhite from '../images/app_logo_white.png';
 import { Link } from 'react-router-dom';
+
+import appLogoWhite from 'src/images/app_logo_white.png';
+
+import './index.scss';
 
 function Header() {
   return (

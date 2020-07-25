@@ -1,5 +1,5 @@
-@import "../typography.scss";
-@import "../variables.scss";
+@import "src/theme/typography";
+@import "src/theme/variables";
 
 .mp-guide-section {
   .mp-guide-title {
@@ -7,7 +7,6 @@
     margin: 30px auto 60px;
     text-align: center;
     font-weight: bold;
-    margin-bottom: 60px;
   }
   .mp-guide-steps-container {
     display: flex;
