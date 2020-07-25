@@ -42,11 +42,9 @@ class AdminController {
     const createdRestaurant = await getRepository(Restaurant).save({
       label,
       location,
+      locationAddress: '',
       imageKey: '',
     });
-
-    console.log(`req.file`);
-    console.log((req as any).file);
 
     if ((req as any).file) {
       uploadToS3(
