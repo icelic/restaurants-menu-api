@@ -94,6 +94,7 @@ class RestaurantController {
   async one(request: Request, response: Response) {
     const restaurant = await getRepository(Restaurant).findOne(
       request.params.id,
+      { relations: ['menus'] }
     );
 
     return response.send(restaurant);
