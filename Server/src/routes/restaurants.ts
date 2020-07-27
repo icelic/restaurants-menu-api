@@ -7,6 +7,7 @@ var storage = multer.memoryStorage();
 var upload = multer({ storage: storage });
 
 restaurantRouter.get('/', RestaurantController.find);
+restaurantRouter.get('/:restaurantId/', RestaurantController.one);
 restaurantRouter.post(
   '/:restaurantId/upload',
   upload.single('image'),
