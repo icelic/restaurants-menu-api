@@ -41,9 +41,7 @@ class RestaurantController {
     }
 
     const restaurantRepository = getRepository(Restaurant);
-    const restaurants = await restaurantRepository.find({
-      relations: ['menus', 'foodTypes'],
-    });
+    const restaurants = await restaurantRepository.find();
     restaurants.forEach((value: Restaurant) => {
       if (value.imageKey !== '') {
         value.imageKey = process.env.AWS_PUBLIC_URL_PREFIX + value.imageKey;
@@ -94,7 +92,7 @@ class RestaurantController {
   async one(request: Request, response: Response) {
     const restaurant = await getRepository(Restaurant).findOne(
       request.params.id,
-      { relations: ['menus'] }
+      { relations: ['menus', 'menus.attachments'] }
     );
 
     return response.send(restaurant);
