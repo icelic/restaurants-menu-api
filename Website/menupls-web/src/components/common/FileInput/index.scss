@@ -1,0 +1,11 @@
+.file-input-container {
+  height: 150px;
+
+  margin-bottom: 30px;
+
+  &__dropzone {
+    height: 50px;
+    border: 1px dashed black;
+    padding: 10px;
+  }
+}

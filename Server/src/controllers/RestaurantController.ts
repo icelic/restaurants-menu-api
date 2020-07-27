@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import { Restaurant } from '../models/Restaurant';
-import { uploadToS3 } from '../utils';
+import { uploadToS3 } from '../utils/upload';
 import fs from 'fs';
 
 // TODO decide where to put client node
@@ -36,7 +36,7 @@ class RestaurantController {
             },
           },
         })
-        .then((data) => response.json(data.body.hits.hits))
+        .then((data) => response.json(data.body.hits.hits.map((restaurant) => restaurant._source)))
         .catch((error) => console.log(error));
     }
 

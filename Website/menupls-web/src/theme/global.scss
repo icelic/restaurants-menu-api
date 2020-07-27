@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital@1&display=swap');
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Merriweather", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.mp-container {
+  max-width: 2000px;
+  margin: 0 auto;
+  overflow-x: hidden;
+  // needed for footer positioning
+  display: flex;
+  flex-direction: column;
+  height: inherit;
+}
+
+.mp-content {
+  flex: 1 0 auto;
+}
+
+.mp-footer {
+  flex-shrink: 0;
+}
+
+code {
+  font-family: "Merriweather", sans-serif;
+}
