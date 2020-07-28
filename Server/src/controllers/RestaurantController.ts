@@ -58,7 +58,7 @@ class RestaurantController {
         index: 'restaurants',
         body: {
           label: request.body.label,
-          location: request.body.location,
+          locationAddress: request.body.location,
           imageKey: request.body.imageKey,
           menus: request.body.menus,
           foodType: request.body.foodType,
