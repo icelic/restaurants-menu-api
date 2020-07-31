@@ -19,6 +19,7 @@ const client = new Client({
 });
 
 class RestaurantController {
+  // TODO: refactor this method
   async find(request: Request, response: Response) {
     // retrieve data from elastic search if query value is defined
     if (request.query.value) {
@@ -38,9 +39,21 @@ class RestaurantController {
         })
         .then((data) => response.json(data.body.hits.hits.map((restaurant) => restaurant._source)))
         .catch((error) => console.log(error));
-    }
+    } 
 
     const restaurantRepository = getRepository(Restaurant);
+
+    // filter restaurants by county 
+    if (request.query.county) {
+      const restaurants = await restaurantRepository.createQueryBuilder("restaurant")
+        .innerJoinAndSelect("restaurant.city", "city")
+        .innerJoinAndSelect("city.county", "county")
+        .where("county.label = :label", { label: request.query.county })
+        .getMany()
+
+      response.send(restaurants);
+    } 
+
     const restaurants = await restaurantRepository.find();
     restaurants.forEach((value: Restaurant) => {
       if (value.imageKey !== '') {
