@@ -3,9 +3,12 @@ import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 
 import { User } from '../models/User';
-import { generateAccessToken } from '../utils/jwt';
+import { Menu } from '../models/Menu';
+
 import { Restaurant } from '../models/Restaurant';
+import { generateAccessToken } from '../utils/jwt';
 import { uploadToS3 } from '../utils/upload';
+import { Attachment } from '../models/Attachment';
 
 // @TODO this all should probably be separate admin backend
 
@@ -32,7 +35,7 @@ class AdminController {
     return res.send(user);
   }
 
-  async createRestaurant(req: Request, res: Response) {
+  async createRestaurantAndMenus(req: Request, res: Response) {
     const { label, location } = req.body;
 
     if (!label || !location) {
@@ -46,17 +49,43 @@ class AdminController {
       imageKey: '',
     });
 
-    if ((req as any).file) {
-      uploadToS3(
-        (req as any).file,
-        `restaurants/${createdRestaurant.id}`,
-        'restaurantImage',
-      ).then(async (data) => {
-        await getRepository(Restaurant).save({
-          id: createdRestaurant.id,
-          imageKey: data.Key,
+    if ((req as any).files) {
+      if ((req as any).files['restaurantImage']) {
+        uploadToS3(
+          (req as any).files['restaurantImage'][0],
+          `restaurants/${createdRestaurant.id}`,
+          'restaurantImage',
+        ).then(async (data) => {
+          await getRepository(Restaurant).save({
+            id: createdRestaurant.id,
+            imageKey: data.Key,
+          });
         });
-      });
+      }
+
+      const menuImages = (req as any).files['restaurantImage'];
+
+      if (menuImages) {
+        const createdMenu = await getRepository(Menu).save({
+          restaurant: createdRestaurant,
+          label: `${createdRestaurant.label} menu`,
+        });
+
+        await Promise.all(
+          menuImages.map((image) =>
+            uploadToS3(
+              image,
+              `restaurants/${createdRestaurant.id}/menus/main`,
+              'menuImage',
+            ).then(async (data) => {
+              await getRepository(Attachment).save({
+                menu: createdMenu,
+                url: data.Key,
+              });
+            }),
+          ),
+        );
+      }
     }
 
     return res.json(createdRestaurant).end();

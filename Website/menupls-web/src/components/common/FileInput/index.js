@@ -4,7 +4,7 @@ import { useDropzone } from 'react-dropzone';
 
 import './index.scss';
 
-function FileInput({ onDrop, label, multiple }) {
+function FileInput({ onDrop, placeholder, multiple }) {
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     onDrop,
     multiple,
@@ -20,10 +20,10 @@ function FileInput({ onDrop, label, multiple }) {
     <section className="file-input-container">
       <div {...getRootProps({ className: 'file-input-container__dropzone' })}>
         <input {...getInputProps()} />
-        <p>{label}</p>
+        <p>{placeholder}</p>
       </div>
       <aside>
-        <h4>Files</h4>
+        <h4>{multiple ? 'Files' : 'File'}</h4>
         <ul>{files}</ul>
       </aside>
     </section>
@@ -31,7 +31,7 @@ function FileInput({ onDrop, label, multiple }) {
 }
 
 FileInput.propTypes = {
-  label: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
   onDrop: PropTypes.func.isRequired,
   multiple: PropTypes.bool,
 };
