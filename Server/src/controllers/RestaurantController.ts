@@ -5,7 +5,7 @@ import { uploadToS3 } from '../utils/upload';
 import fs from 'fs';
 
 // TODO decide where to put client node
-import { Client } from '@elastic/elasticsearch';
+/*import { Client } from '@elastic/elasticsearch';
 const client = new Client({
   node: process.env.API_HOST,
   auth: {
@@ -16,14 +16,14 @@ const client = new Client({
     ca: fs.readFileSync('./certs/fullchain.pem'),
     rejectUnauthorized: false,
   },
-});
+});*/
 
 class RestaurantController {
   // TODO: refactor this method
   async find(request: Request, response: Response) {
     // retrieve data from elastic search if query value is defined
     if (request.query.value) {
-      return client
+      /*return client
         .search({
           // TODO define indexes and fields in a different file
           index: 'restaurants',
@@ -38,12 +38,12 @@ class RestaurantController {
           },
         })
         .then((data) => response.json(data.body.hits.hits.map((restaurant) => restaurant._source)))
-        .catch((error) => console.log(error));
-    } 
+        .catch((error) => console.log(error));*/
+    }
 
     const restaurantRepository = getRepository(Restaurant);
 
-    // filter restaurants by county 
+    // filter restaurants by county
     if (request.query.county) {
       const restaurants = await restaurantRepository.createQueryBuilder("restaurant")
         .innerJoinAndSelect("restaurant.city", "city")
@@ -52,7 +52,7 @@ class RestaurantController {
         .getMany()
 
       response.send(restaurants);
-    } 
+    }
 
     const restaurants = await restaurantRepository.find();
     restaurants.forEach((value: Restaurant) => {
@@ -65,7 +65,7 @@ class RestaurantController {
   }
 
   async saveToIndex(request: Request, response: Response) {
-    client
+    /*client
       .index({
         // TODO define indexes in a different file
         index: 'restaurants',
@@ -77,7 +77,7 @@ class RestaurantController {
           foodType: request.body.foodType,
         },
       })
-      .then((data) => response.json(data.body));
+      .then((data) => response.json(data.body));*/
   }
 
   async uploadRestaurantImage(request: Request, response: Response) {
