@@ -7,6 +7,9 @@ const config = {
     secret: process.env.ACCESS_TOKEN_SECRET,
     expiresIn: 24 * 60 * 60, // expires in 24 h
   },
+  cors: {
+    origin: process.env.REACT_APP_HOSTNAME,
+  },
 };
 
 Object.assign(config, require(`./${config.env}`).default);

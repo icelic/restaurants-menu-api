@@ -5,7 +5,7 @@ import { uploadToS3 } from '../utils/upload';
 import fs from 'fs';
 
 // TODO decide where to put client node
-import { Client } from '@elastic/elasticsearch';
+/*import { Client } from '@elastic/elasticsearch';
 const client = new Client({
   node: process.env.API_HOST,
   auth: {
@@ -16,13 +16,14 @@ const client = new Client({
     ca: fs.readFileSync('./certs/fullchain.pem'),
     rejectUnauthorized: false,
   },
-});
+});*/
 
 class RestaurantController {
+  // TODO: refactor this method
   async find(request: Request, response: Response) {
     // retrieve data from elastic search if query value is defined
     if (request.query.value) {
-      return client
+      /*return client
         .search({
           // TODO define indexes and fields in a different file
           index: 'restaurants',
@@ -37,13 +38,23 @@ class RestaurantController {
           },
         })
         .then((data) => response.json(data.body.hits.hits.map((restaurant) => restaurant._source)))
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(error));*/
     }
 
     const restaurantRepository = getRepository(Restaurant);
-    const restaurants = await restaurantRepository.find({
-      relations: ['menus', 'foodTypes'],
-    });
+
+    // filter restaurants by county
+    if (request.query.county) {
+      const restaurants = await restaurantRepository.createQueryBuilder("restaurant")
+        .innerJoinAndSelect("restaurant.city", "city")
+        .innerJoinAndSelect("city.county", "county")
+        .where("county.label = :label", { label: request.query.county })
+        .getMany()
+
+      response.send(restaurants);
+    }
+
+    const restaurants = await restaurantRepository.find();
     restaurants.forEach((value: Restaurant) => {
       if (value.imageKey !== '') {
         value.imageKey = process.env.AWS_PUBLIC_URL_PREFIX + value.imageKey;
@@ -54,19 +65,19 @@ class RestaurantController {
   }
 
   async saveToIndex(request: Request, response: Response) {
-    client
+    /*client
       .index({
         // TODO define indexes in a different file
         index: 'restaurants',
         body: {
           label: request.body.label,
-          location: request.body.location,
+          locationAddress: request.body.location,
           imageKey: request.body.imageKey,
           menus: request.body.menus,
           foodType: request.body.foodType,
         },
       })
-      .then((data) => response.json(data.body));
+      .then((data) => response.json(data.body));*/
   }
 
   async uploadRestaurantImage(request: Request, response: Response) {
@@ -94,6 +105,7 @@ class RestaurantController {
   async one(request: Request, response: Response) {
     const restaurant = await getRepository(Restaurant).findOne(
       request.params.id,
+      { relations: ['menus', 'menus.attachments'] }
     );
 
     return response.send(restaurant);

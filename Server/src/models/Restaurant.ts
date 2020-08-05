@@ -1,7 +1,8 @@
-import { Column, Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, ManyToOne } from 'typeorm';
 import { BaseModel } from './BaseModel';
 import { Menu } from './Menu';
 import { FoodType } from './FoodType';
+import { City } from './City';
 
 @Entity()
 export class Restaurant extends BaseModel {
@@ -23,4 +24,7 @@ export class Restaurant extends BaseModel {
   @ManyToMany(() => FoodType)
   @JoinTable({ name: 'restaurant_has_food_type' })
   foodTypes: FoodType[];
+
+  @ManyToOne(() => City, (city) => city.restaurants)
+  city: City;
 }
