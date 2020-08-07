@@ -26,6 +26,7 @@ const AdminRestaurantForm = () => {
     const formData = new FormData();
     formData.append('label', data.label);
     formData.append('location', data.location);
+    formData.append('locationAddress', data.locationAddress);
     formData.append('restaurantImage', restaurantImage);
     formData.append('menuImages', menuImages);
 
@@ -62,6 +63,7 @@ const AdminRestaurantForm = () => {
           validationSchema={validationSchema}
         >
           <Input name="label" label="Name" />
+          <Input name="locationAddress" label="Location" />
           <Input name="location" label="Location (lat,lng)" />
           <FileInput
             placeholder="Drag and drop or click here to add restaurant image"
