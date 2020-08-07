@@ -8,4 +8,5 @@ export default object().shape({
       '(\\d+).?(\\d+),(\\d+).?(\\d+)',
       'Location must be in the following format: 123.123,1231.12'
     ),
+  locationAddress: string().required('Location address is required'),
 });

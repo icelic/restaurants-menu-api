@@ -36,16 +36,19 @@ class AdminController {
   }
 
   async createRestaurantAndMenus(req: Request, res: Response) {
-    const { label, location } = req.body;
+    const { label, location, locationAddress } = req.body;
 
-    if (!label || !location) {
-      return res.status(400).json('Request missing name or location!').end();
+    if (!label || !location || !locationAddress) {
+      return res
+        .status(400)
+        .json('Request missing name, location or location address!')
+        .end();
     }
 
     const createdRestaurant = await getRepository(Restaurant).save({
       label,
       location,
-      locationAddress: '',
+      locationAddress,
       imageKey: '',
     });
 
