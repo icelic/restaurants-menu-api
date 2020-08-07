@@ -5,7 +5,7 @@ import { uploadToS3 } from '../utils/upload';
 import fs from 'fs';
 
 // TODO decide where to put client node
-/*import { Client } from '@elastic/elasticsearch';
+import { Client } from '@elastic/elasticsearch';
 const client = new Client({
   node: process.env.API_HOST,
   auth: {
@@ -16,21 +16,21 @@ const client = new Client({
     ca: fs.readFileSync('./certs/fullchain.pem'),
     rejectUnauthorized: false,
   },
-});*/
+});
 
 class RestaurantController {
   // TODO: refactor this method
   async find(request: Request, response: Response) {
     // retrieve data from elastic search if query value is defined
     if (request.query.value) {
-      /*return client
+      return client
         .search({
           // TODO define indexes and fields in a different file
           index: 'restaurants',
           body: {
             query: {
               query_string: {
-                fields: ['label', 'location'],
+                fields: ['label', 'locationAddress'],
                 // find everything that contains the given value
                 query: '*' + request.query.value + '*',
               },
@@ -38,7 +38,7 @@ class RestaurantController {
           },
         })
         .then((data) => response.json(data.body.hits.hits.map((restaurant) => restaurant._source)))
-        .catch((error) => console.log(error));*/
+        .catch((error) => console.log(error));
     }
 
     const restaurantRepository = getRepository(Restaurant);
@@ -65,19 +65,20 @@ class RestaurantController {
   }
 
   async saveToIndex(request: Request, response: Response) {
-    /*client
+    client
       .index({
         // TODO define indexes in a different file
         index: 'restaurants',
         body: {
           label: request.body.label,
-          locationAddress: request.body.location,
+          location: request.body.location,
+          locationAddress: request.body.locationAddress,
           imageKey: request.body.imageKey,
           menus: request.body.menus,
           foodType: request.body.foodType,
         },
       })
-      .then((data) => response.json(data.body));*/
+      .then((data) => response.json(data.body));
   }
 
   async uploadRestaurantImage(request: Request, response: Response) {
