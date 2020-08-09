@@ -17,8 +17,6 @@ services:
     networks:
      -  restaurants-network
   restaurants-menu-website:
-    environment:
-      - REACT_APP_API_BASE_URL=https://${HOSTNAME}
     build:
       context: ../..
       dockerfile: conf/Website/Dockerfile.prod
