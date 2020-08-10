@@ -11,6 +11,9 @@
 When you are done you can release resources with 
 5. `./stop_dev.sh`
 
+## Website autoreload in development
+Use: http://localhost:3000/ instead of https://domainname
+
 ## Note: elastic search memory error fix
 `sudo sysctl -w vm.max_map_count=262144`
 
