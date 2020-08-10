@@ -6,7 +6,7 @@
 3. `./generate_certs.sh` -> you need to run this only once
 4. Declare env files 
 - Create `.env_dev` file in `/conf/docker-compose/envs`
-- In the app root (next to package.json) create .env file from .env.example
+- In `Server` and `Website/menupls-web` create .env file from .env.example (define your variables there)
 4. `./start_dev.sh`
 When you are done you can release resources with 
 5. `./stop_dev.sh`
