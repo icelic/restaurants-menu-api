@@ -10,7 +10,7 @@ const client = new Client({
   node: process.env.API_HOST,
   auth: {
     username: 'elastic',
-    password: process.env.ES_PASSWORD as string,
+    password: process.env.ES_PASSWORD!,
   },
   ssl: {
     ca: fs.readFileSync('./certs/fullchain.pem'),
