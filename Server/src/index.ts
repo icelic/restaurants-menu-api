@@ -2,12 +2,14 @@ import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 import 'babel-core/register';
 import 'babel-polyfill';
-import config from './config';
 import express from 'express';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
 import https from 'https';
 import fs from 'fs';
+import cors from 'cors';
+
+import config from './config';
 import { router } from './routes';
 
 createConnection()
@@ -15,6 +17,8 @@ createConnection()
     console.log('Database connection created!');
 
     const app = express();
+
+    app.use(cors(config.cors));
 
     app.use(logger('dev'));
     app.enable('trust proxy');
@@ -26,6 +30,7 @@ createConnection()
     app.listen(config.port, () =>
       console.log(`Listening on port ${config.port}`),
     );
+
     if (config.env === 'production') {
       const httpsPort = 443;
       const httpsOptions = {

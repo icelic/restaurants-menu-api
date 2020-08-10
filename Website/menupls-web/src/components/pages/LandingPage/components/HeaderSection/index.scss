@@ -1,0 +1,54 @@
+@import "src/theme/typography";
+@import "src/theme/variables";
+
+.mp-header-section {
+  background-image: url("../../../../../images/hero_img.jpg");
+  background-size: cover;
+  height: 700px;
+  @media screen and (max-width: map-get($breakpoints, desktop)) {
+    height: 450px;
+  }
+  .mp-header-content {
+    display: flex;
+    flex-direction: column;
+    padding: 50px 0 50px 140px;
+    @media screen and (max-width: map-get($breakpoints, desktop)) {
+      padding: 10px;
+    }
+    .mp-menu-icon-row {
+      @media screen and (max-width: map-get($breakpoints, desktop)) {
+        align-self: center;
+      }
+      .mp-image {
+        height: 100px;
+        width: 132px;
+      }
+    }
+    .mp-title-row {
+      .mp-app-name {
+        @include font-headline-2();
+        color: white;
+        @media screen and (max-width: map-get($breakpoints, desktop)) {
+          text-align: center;
+          margin-top: 30px;
+        }
+      }
+      .mp-header-title {
+        @include font-headline-1();
+        color: white;
+        max-width: 700px;
+        margin: 70px 0 30px;
+        @media screen and (max-width: map-get($breakpoints, desktop)) {
+          text-align: center;
+        }
+      }
+      .mp-header-description {
+        @include font-headline-3();
+        color: white;
+        @media screen and (max-width: map-get($breakpoints, desktop)) {
+          text-align: center;
+        }
+      }
+    }
+  }
+}

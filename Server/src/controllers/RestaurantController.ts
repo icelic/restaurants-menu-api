@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import { Restaurant } from '../models/Restaurant';
-import { uploadToS3 } from '../utils';
+import { uploadToS3 } from '../utils/upload';
 import fs from 'fs';
 
 // TODO decide where to put client node
@@ -19,6 +19,7 @@ const client = new Client({
 });
 
 class RestaurantController {
+  // TODO: refactor this method
   async find(request: Request, response: Response) {
     // retrieve data from elastic search if query value is defined
     if (request.query.value) {
@@ -29,21 +30,31 @@ class RestaurantController {
           body: {
             query: {
               query_string: {
-                fields: ['label', 'location'],
+                fields: ['label', 'locationAddress'],
                 // find everything that contains the given value
                 query: '*' + request.query.value + '*',
               },
             },
           },
         })
-        .then((data) => response.json(data.body.hits.hits))
+        .then((data) => response.json(data.body.hits.hits.map((restaurant) => restaurant._source)))
         .catch((error) => console.log(error));
     }
 
     const restaurantRepository = getRepository(Restaurant);
-    const restaurants = await restaurantRepository.find({
-      relations: ['menus', 'foodTypes'],
-    });
+
+    // filter restaurants by county
+    if (request.query.county) {
+      const restaurants = await restaurantRepository.createQueryBuilder("restaurant")
+        .innerJoinAndSelect("restaurant.city", "city")
+        .innerJoinAndSelect("city.county", "county")
+        .where("county.label = :label", { label: request.query.county })
+        .getMany()
+
+      response.send(restaurants);
+    }
+
+    const restaurants = await restaurantRepository.find();
     restaurants.forEach((value: Restaurant) => {
       if (value.imageKey !== '') {
         value.imageKey = process.env.AWS_PUBLIC_URL_PREFIX + value.imageKey;
@@ -61,6 +72,7 @@ class RestaurantController {
         body: {
           label: request.body.label,
           location: request.body.location,
+          locationAddress: request.body.locationAddress,
           imageKey: request.body.imageKey,
           menus: request.body.menus,
           foodType: request.body.foodType,
@@ -94,6 +106,7 @@ class RestaurantController {
   async one(request: Request, response: Response) {
     const restaurant = await getRepository(Restaurant).findOne(
       request.params.id,
+      { relations: ['menus', 'menus.attachments'] }
     );
 
     return response.send(restaurant);
