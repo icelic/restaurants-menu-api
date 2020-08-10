@@ -6,6 +6,8 @@ WORKDIR /app/server
 COPY /Server/package.json /app/server/
 COPY /Server/tsconfig*.json /app/server/
 
+RUN npm install typescript -g
+
 RUN npm install
 
 #RUN npm run typeorm migration:run
