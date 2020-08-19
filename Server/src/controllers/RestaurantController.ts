@@ -21,8 +21,54 @@ const client = new Client({
 class RestaurantController {
   // TODO: refactor this method
   async find(request: Request, response: Response) {
+    const restaurantRepository = getRepository(Restaurant);
+
+    // filter restaurants by county and/or 
     // retrieve data from elastic search if query value is defined
-    if (request.query.value) {
+    if (request.query.county) {
+      if (request.query.value) {
+        return client
+        .search({
+          // TODO define indexes and fields in a different file
+          index: 'restaurants',
+          body: {
+            query: {
+              bool: {
+                must: [
+                  {
+                    query_string: {
+                      fields: ['label', 'locationAddress'],
+                      // find everything that contains the given value
+                      query: '*' + request.query.value + '*',
+                    },
+                  }
+                ],
+                filter: [
+                  {
+                    nested: {
+                      path: 'city',
+                      filter: {
+                        term: { 'city.county': request.query.county }
+                      }
+                    }
+                  }
+                ]
+              },
+            },
+          },
+        })
+        .then((data) => response.json(data.body.hits.hits.map((restaurant) => restaurant._source)))
+        .catch((error) => console.log(error));
+      } else {
+        const restaurants = await restaurantRepository.createQueryBuilder("restaurant")
+        .innerJoinAndSelect("restaurant.city", "city")
+        .innerJoinAndSelect("city.county", "county")
+        .where("county.label = :label", { label: request.query.county })
+        .getMany()
+
+        response.send(restaurants);
+      }
+    } else if (request.query.value) {
       return client
         .search({
           // TODO define indexes and fields in a different file
@@ -41,19 +87,7 @@ class RestaurantController {
         .catch((error) => console.log(error));
     }
 
-    const restaurantRepository = getRepository(Restaurant);
-
-    // filter restaurants by county
-    if (request.query.county) {
-      const restaurants = await restaurantRepository.createQueryBuilder("restaurant")
-        .innerJoinAndSelect("restaurant.city", "city")
-        .innerJoinAndSelect("city.county", "county")
-        .where("county.label = :label", { label: request.query.county })
-        .getMany()
-
-      response.send(restaurants);
-    }
-
+    // all restaurants
     const restaurants = await restaurantRepository.find();
     restaurants.forEach((value: Restaurant) => {
       if (value.imageKey !== '') {
@@ -75,6 +109,7 @@ class RestaurantController {
           locationAddress: request.body.locationAddress,
           imageKey: request.body.imageKey,
           menus: request.body.menus,
+          city: request.body.city,
           foodType: request.body.foodType,
         },
       })
