@@ -1,15 +1,17 @@
-.input-container {
+.select-container {
   display: flex;
   align-items: center;
   justify-content: flex-end;
 
   width: 500px;
 
+  margin-bottom: 20px;
+
   &__label {
     margin-right: 20px;
   }
 
-  &__input {
+  &__select {
     font-size: 16px;
     border: 1px solid #7c7c7c;
 
@@ -26,23 +28,5 @@
     &--error {
       border-color: red;
     }
-
-    &[type="file"] {
-      border: none;
-    }
   }
-}
-
-.error-message {
-  height: 20px;
-
-  color: red;
-  font-weight: bold;
-  font-size: 12px;
-
-  margin-top: 2px;
-  margin-bottom: 5px;
-  margin-left: 10px;
-
-  text-align: right;
 }
