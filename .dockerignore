@@ -1,0 +1,9 @@
+.git
+
+Website/menupls-web/node_modules
+Website/menupls-web/node_modules/*
+
+Server/node_modules
+Server/node_modules/*
+
+npm-debug.log

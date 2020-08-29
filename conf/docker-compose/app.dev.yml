@@ -17,13 +17,15 @@ services:
     networks:
      -  restaurants-network
   restaurants-menu-website:
+    stdin_open: true
     build:
       context: ../..
-      dockerfile: conf/Website/Dockerfile.prod
+      dockerfile: conf/Website/Dockerfile.dev
     ports:
-      - ${WEBSITE_PORT}:4000
+      - ${WEBSITE_PORT}:3000
     volumes:
       - ../dev-certs:/app/website/certs
+      - ../../Website/menupls-web:/app/website/
     networks:
       restaurants-network:
         aliases:
@@ -35,11 +37,12 @@ services:
       - APP_ENV=${APP_ENV}
     build:
       context: ../..
-      dockerfile: conf/Server/Dockerfile.prod
+      dockerfile: conf/Server/Dockerfile.dev
     ports:
       - ${API_PORT}:8080
     volumes:
       - ../dev-certs:/app/server/certs
+      - ../../Server:/app/server/
     networks:
       restaurants-network:
         aliases:
@@ -52,7 +55,7 @@ services:
       - discovery.seed_hosts=es01
       - cluster.initial_master_nodes=es01
       - ELASTIC_PASSWORD=${ES_PASSWORD}
-      - "ES_JAVA_OPTS=-Xms200m -Xmx200m"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - xpack.security.enabled=true
       - xpack.security.http.ssl.enabled=true
       - xpack.security.http.ssl.key=${ES_CERTS_DIR}/privkey.pem
