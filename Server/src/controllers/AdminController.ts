@@ -9,6 +9,7 @@ import { Restaurant } from '../models/Restaurant';
 import { generateAccessToken } from '../utils/jwt';
 import { uploadToS3 } from '../utils/upload';
 import { Attachment } from '../models/Attachment';
+import { City } from '../models/City';
 
 // @TODO this all should probably be separate admin backend
 
@@ -36,7 +37,7 @@ class AdminController {
   }
 
   async createRestaurantAndMenus(req: Request, res: Response) {
-    const { label, location, locationAddress } = req.body;
+    const { label, location, locationAddress, cityId } = req.body;
 
     if (!label || !location || !locationAddress) {
       return res
@@ -44,12 +45,16 @@ class AdminController {
         .json('Request missing name, location or location address!')
         .end();
     }
+    const restaurantCity = await getRepository(City).findOne({
+      where: { id: cityId },
+    });
 
     const createdRestaurant = await getRepository(Restaurant).save({
       label,
       location,
       locationAddress,
       imageKey: '',
+      city: restaurantCity,
     });
 
     if ((req as any).files) {
