@@ -17,6 +17,9 @@ services:
     networks:
      -  restaurants-network
   restaurants-menu-website:
+    environment:
+      - SKIP_PREFLIGHT_CHECK=${SKIP_PREFLIGHT_CHECK}
+      - REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
     build:
       context: ../..
       dockerfile: conf/Website/Dockerfile.prod
@@ -33,6 +36,16 @@ services:
       - API_HOST=https://${HOSTNAME}:9200
       - ES_PASSWORD=${ES_PASSWORD}
       - APP_ENV=${APP_ENV}
+      - DB_NAME=${DB_NAME}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - BUCKET_NAME=${BUCKET_NAME}
+      - AWS_PUBLIC_URL_PREFIX=${AWS_PUBLIC_URL_PREFIX}
+      - ACCESS_TOKEN_SECRET=${ACCESS_TOKEN_SECRET}
     build:
       context: ../..
       dockerfile: conf/Server/Dockerfile.prod
