@@ -71,7 +71,7 @@ class AdminController {
         });
       }
 
-      const menuImages = (req as any).files['restaurantImage'];
+      const menuImages = (req as any).files['menuImages'];
 
       if (menuImages) {
         const createdMenu = await getRepository(Menu).save({
