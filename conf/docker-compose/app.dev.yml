@@ -19,7 +19,7 @@ services:
   restaurants-menu-website:
     environment:
       - SKIP_PREFLIGHT_CHECK=${SKIP_PREFLIGHT_CHECK}
-      - REACT_APP_API_BASE_URL=https://${HOSTNAME}
+      - REACT_APP_API_BASE_URL=https://${HOSTNAME}:${WEBSITE_PORT}
     stdin_open: true
     build:
       context: ../..
@@ -29,13 +29,17 @@ services:
     volumes:
       - ../dev-certs:/app/website/certs
       - ../../Website/menupls-web:/app/website/
+      - /app/website/node_modules/
     networks:
       restaurants-network:
         aliases:
           - ${HOSTNAME}
   restaurants-menu-app:
     environment:
-      - API_HOST=https://${HOSTNAME}:9200
+      - API_HOST=${HOSTNAME}
+      - REACT_APP_HOSTNAME=https://${HOSTNAME}:${WEBSITE_PORT}
+      - API_PORT=${API_PORT}
+      - ES_HOST=https://${HOSTNAME}:9200
       - ES_PASSWORD=${ES_PASSWORD}
       - APP_ENV=${APP_ENV}
       - DB_NAME=${DB_NAME}
@@ -56,6 +60,7 @@ services:
     volumes:
       - ../dev-certs:/app/server/certs
       - ../../Server:/app/server/
+      - /app/server/node_modules/
     networks:
       restaurants-network:
         aliases:

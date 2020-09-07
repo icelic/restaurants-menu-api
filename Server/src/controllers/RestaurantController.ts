@@ -7,7 +7,7 @@ import fs from 'fs';
 // TODO decide where to put client node
 import { Client } from '@elastic/elasticsearch';
 const client = new Client({
-  node: process.env.API_HOST,
+  node: process.env.ES_HOST,
   auth: {
     username: 'elastic',
     password: process.env.ES_PASSWORD!,
