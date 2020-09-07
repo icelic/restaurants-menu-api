@@ -19,7 +19,7 @@ services:
   restaurants-menu-website:
     environment:
       - SKIP_PREFLIGHT_CHECK=${SKIP_PREFLIGHT_CHECK}
-      - REACT_APP_API_BASE_URL=https://${HOSTNAME}:${WEBSITE_PORT}
+      - REACT_APP_API_BASE_URL=https://${HOSTNAME}:${API_PORT}
     stdin_open: true
     build:
       context: ../..
