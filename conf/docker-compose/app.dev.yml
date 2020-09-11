@@ -19,7 +19,7 @@ services:
   restaurants-menu-website:
     environment:
       - SKIP_PREFLIGHT_CHECK=${SKIP_PREFLIGHT_CHECK}
-      - REACT_APP_API_BASE_URL=https://${HOSTNAME}:${API_PORT}
+      - REACT_APP_API_BASE_URL=https://${HOSTNAME}
     stdin_open: true
     build:
       context: ../..
@@ -37,7 +37,7 @@ services:
   restaurants-menu-app:
     environment:
       - API_HOST=${HOSTNAME}
-      - REACT_APP_HOSTNAME=https://${HOSTNAME}:${WEBSITE_PORT}
+      - REACT_APP_HOSTNAME=https://${HOSTNAME}
       - API_PORT=${API_PORT}
       - ES_HOST=https://${HOSTNAME}:9200
       - ES_PASSWORD=${ES_PASSWORD}
