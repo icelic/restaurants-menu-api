@@ -33,7 +33,7 @@ const AdminRestaurantForm = () => {
     formData.append('location', data.location);
     formData.append('locationAddress', data.locationAddress);
     formData.append('restaurantImage', restaurantImage);
-    formData.append('menuImages', menuImages);
+    menuImages.forEach(menuImage => formData.append('menuImages', menuImage))
 
     axios
       .all([
