@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import { Restaurant } from '../models/Restaurant';
 import { uploadToS3 } from '../utils/upload';
+import { addAwsPublicUrlPrefixToImageKey } from '../utils/addAwsPublicUrlPrefixToImageKey'
 import fs from 'fs';
 
 // TODO decide where to put client node
@@ -40,31 +41,29 @@ class RestaurantController {
                       fields: ['label', 'locationAddress'],
                       // find everything that contains the given value
                       query: '*' + request.query.value + '*',
-                    },
+                    }
                   }
                 ],
                 filter: [
                   {
-                    nested: {
-                      path: 'city',
-                      filter: {
-                        term: { 'city.county': request.query.county }
-                      }
+                    match: {
+                      county: request.query.county
                     }
                   }
                 ]
-              },
-            },
+              }
+            }
           },
         })
         .then((data) => response.json(data.body.hits.hits.map((restaurant) => restaurant._source)))
         .catch((error) => console.log(error));
       } else {
-        const restaurants = await restaurantRepository.createQueryBuilder("restaurant")
+        let restaurants = await restaurantRepository.createQueryBuilder("restaurant")
         .innerJoinAndSelect("restaurant.city", "city")
         .innerJoinAndSelect("city.county", "county")
         .where("county.label = :label", { label: request.query.county })
         .getMany()
+        restaurants = addAwsPublicUrlPrefixToImageKey(restaurants);
 
         response.send(restaurants);
       }
@@ -88,12 +87,8 @@ class RestaurantController {
     }
 
     // all restaurants
-    const restaurants = await restaurantRepository.find();
-    restaurants.forEach((value: Restaurant) => {
-      if (value.imageKey !== '') {
-        value.imageKey = process.env.AWS_PUBLIC_URL_PREFIX + value.imageKey;
-      }
-    });
+    let restaurants = await restaurantRepository.find();
+    restaurants = addAwsPublicUrlPrefixToImageKey(restaurants);
 
     response.send(restaurants);
   }
@@ -104,13 +99,12 @@ class RestaurantController {
         // TODO define indexes in a different file
         index: 'restaurants',
         body: {
+          id: request.body.id,
           label: request.body.label,
-          location: request.body.location,
           locationAddress: request.body.locationAddress,
           imageKey: request.body.imageKey,
-          menus: request.body.menus,
           city: request.body.city,
-          foodType: request.body.foodType,
+          county: request.body.county,
         },
       })
       .then((data) => response.json(data.body));
@@ -139,10 +133,21 @@ class RestaurantController {
   }
 
   async one(request: Request, response: Response) {
-    const restaurant = await getRepository(Restaurant).findOne(
-      request.params.id,
+    let restaurant = await getRepository(Restaurant).findOne(
+      request.params.restaurantId,
       { relations: ['menus', 'menus.attachments'] }
     );
+
+    if (restaurant) {
+      if (restaurant.imageKey != '') {
+        restaurant.imageKey = process.env.AWS_PUBLIC_URL_PREFIX + restaurant.imageKey;
+      }
+      if (restaurant.menus[0].attachments) {
+        restaurant.menus[0].attachments.forEach((attachment) => {
+          attachment.url = process.env.AWS_PUBLIC_URL_PREFIX + attachment.url;
+        })
+      }
+    }
 
     return response.send(restaurant);
   }
