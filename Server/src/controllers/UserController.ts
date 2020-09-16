@@ -48,10 +48,10 @@ class UserController {
   }
 
   async save(request: Request, response: Response) {
-    let user = await getRepository(User).findOne({ email: request.body.email });
+    let user = await getRepository(User).findOne({ email: request.body.data.email });
 
     if (!user) {
-      user = await getRepository(User).save(request.body);
+      user = await getRepository(User).save(request.body.data);
       return response.send(user);
     }
 
