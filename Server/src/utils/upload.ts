@@ -16,10 +16,11 @@ function uploadToS3(
   fileStream: Buffer,
   folderName: string,
   fileName: string,
+  fileExtension: string,
 ): Promise<any> {
   const params = {
     Bucket: process.env.BUCKET_NAME,
-    Key: `menupls/${folderName}/${fileName}_${Date.now()}`,
+    Key: `menupls/${folderName}/${fileName}_${Date.now()}${fileExtension}`,
     Body: fileStream.buffer,
   };
   return new Promise((resolve, reject) => {

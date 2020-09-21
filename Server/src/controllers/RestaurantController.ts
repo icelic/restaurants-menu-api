@@ -115,6 +115,7 @@ class RestaurantController {
       (request as any).file,
       `restaurants/${request.params.restaurantId.toString()}`,
       'restaurantImage',
+      ''
     ).then(async (data) => {
       const restaurant = await getRepository(Restaurant).findOne(
         request.params.restaurantId.toString(),

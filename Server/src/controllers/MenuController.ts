@@ -38,6 +38,7 @@ class MenuController {
       (request as any).file,
       `menus/${request.params.restaurantId.toString()}`,
       request.params.menuId.toString(),
+      ''
     ).then(async (data) => {
       const newAttachment = new Attachment();
       newAttachment.url = data.Key;

@@ -63,10 +63,11 @@ class AdminController {
           (req as any).files['restaurantImage'][0],
           `restaurants/${createdRestaurant.id}`,
           'restaurantImage',
+          '.jpg'
         ).then(async (data) => {
           await getRepository(Restaurant).save({
             id: createdRestaurant.id,
-            imageKey: data.Key,
+            imageKey: data.Key + '.jpg',
           });
         });
       }
@@ -78,13 +79,14 @@ class AdminController {
           restaurant: createdRestaurant,
           label: `${createdRestaurant.label} menu`,
         });
-
+    
         await Promise.all(
           menuImages.map((image) =>
             uploadToS3(
               image,
               `restaurants/${createdRestaurant.id}/menus/main`,
-              'menuImage',
+              'menu',
+              image.mimetype === 'application/pdf' ? '.pdf' : '.jpg'
             ).then(async (data) => {
               await getRepository(Attachment).save({
                 menu: createdMenu,
