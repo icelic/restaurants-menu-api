@@ -67,7 +67,7 @@ class AdminController {
         ).then(async (data) => {
           await getRepository(Restaurant).save({
             id: createdRestaurant.id,
-            imageKey: data.Key + '.jpg',
+            imageKey: data.Key,
           });
         });
       }
