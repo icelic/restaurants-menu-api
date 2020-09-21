@@ -46,15 +46,16 @@ const AdminRestaurantForm = () => {
             },
           }
         ),
-        axios.post(
-          `${process.env.REACT_APP_API_BASE_URL}/api/restaurants`,
-          formData,
-          {
-            headers: {
-              'content-type': 'multipart/form-data',
-            },
-          }
-        )
+        // currently not using
+        // axios.post(
+        //  `${process.env.REACT_APP_API_BASE_URL}/api/restaurants`,
+        //  formData,
+        //  {
+        //    headers: {
+        //      'content-type': 'multipart/form-data',
+        //    },
+        //  }
+        // )
       ])
       .then(() => {
         formRef.current.reset();
